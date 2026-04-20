@@ -1,21 +1,28 @@
-using UnityEngine;
+Ôªøusing UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    [Header("ùùùùùù?")]
+    [Header("Ïª¥Ìè¨ÎÑåÌä∏")]
     [SerializeField] EnemyModel _model;
+    [SerializeField] EnemyView _view;
 
     Session _session;
 
-    public void Initialize(Session session, float maxHp)
+    public void Initialize(EnemyView view, Session session, float maxHp)
     {
+        _view = view;   
+        _session = session;
         _model.Initialize(maxHp);
+
+        _view.UpdateHp(_model.CurrentHp, _model.MaxHp);
     }
 
 
     public void TakeHit(float damage)
     {
         _model.TakeDamage(damage);
+
+        _view.UpdateHp(_model.CurrentHp, _model.MaxHp);
 
         if (_model.IsAlive == false)
         {

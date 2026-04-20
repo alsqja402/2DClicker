@@ -1,11 +1,11 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 
 /// <summary>
-/// °ø°İ, ÀÌµ¿ ¸ğ¼Ç
+/// ê³µê²©, ì´ë™ ëª¨ì…˜
 /// </summary>
 public class Hero : MonoBehaviour
 {
-    [Header("ÄÄÆ÷³ÍÆ®")]
+    [Header("ì»´í¬ë„ŒíŠ¸")]
     [SerializeField] HeroModel _model;
     [SerializeField] HeroRenderer _renderer;
 
