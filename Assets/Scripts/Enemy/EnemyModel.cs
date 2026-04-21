@@ -10,7 +10,7 @@ public class EnemyModel : MonoBehaviour
     // (Getter란 멤버 변수를 외부에서 읽어 갈 수 있게 해주는 함수)
     public float MaxHp => _maxHp;
     public float CurrentHp => _currentHp;
-    public bool IsAlive => _currentHp > 0;
+    public bool IsAlive => _currentHp > Util.Epsilon;
 
     public void Initialize(float maxHp)
     {

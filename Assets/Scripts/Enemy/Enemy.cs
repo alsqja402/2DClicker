@@ -5,13 +5,17 @@ public class Enemy : MonoBehaviour
     [Header("컴포넌트")]
     [SerializeField] EnemyModel _model;
     [SerializeField] EnemyView _view;
+    [SerializeField] Transform _damageViewPoint;
 
     Session _session;
 
-    public void Initialize(EnemyView view, Session session, float maxHp)
+    DamageSpawner _damageSpawner;
+
+    public void Initialize(EnemyView view, Session session, float maxHp, DamageSpawner damageSpawner)
     {
         _view = view;   
         _session = session;
+        _damageSpawner = damageSpawner; 
         _model.Initialize(maxHp);
 
         _view.UpdateHp(_model.CurrentHp, _model.MaxHp);
@@ -21,6 +25,8 @@ public class Enemy : MonoBehaviour
     public void TakeHit(float damage)
     {
         _model.TakeDamage(damage);
+
+        _damageSpawner.SpawnDamageView(_damageViewPoint.position, damage);
 
         _view.UpdateHp(_model.CurrentHp, _model.MaxHp);
 

@@ -1,3 +1,5 @@
+using DG.Tweening;
+using TMPro;
 using UnityEngine;
 
 public class Session : MonoBehaviour
@@ -15,8 +17,10 @@ public class Session : MonoBehaviour
 
     [Header("적")]
     [SerializeField] float _baseHp;
-    [SerializeField] float _hpMultiplier;  
+    [SerializeField] float _hpMultiplier;
 
+    [SerializeField] DamageSpawner _damageSpawner;
+    
     int _stageCount;
     int _killCount; 
     int _enemyCount = 3;
@@ -35,11 +39,9 @@ public class Session : MonoBehaviour
     public void EnemyDead()
     {
         AddKillCount();
-
-        //_stageCount++;
+        
         _view.UpdateStageText(_stageCount);
 
-        //_killCount++;
         _view.UpdateKillText(_killCount, _enemyCount);
         SpawnEnemy();
     }
@@ -53,7 +55,7 @@ public class Session : MonoBehaviour
 
         // 이거때매 적 스폰이 됐음 
         float maxHp = GetHpByStage(_stageCount);
-        _enemy.Initialize(_enemyView, this, maxHp);
+        _enemy.Initialize(_enemyView, this, maxHp, _damageSpawner);
     }
 
     public void TapAttack()

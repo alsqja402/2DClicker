@@ -2,6 +2,7 @@ using UnityEngine;
 
 public static class Util
 {
+    public const float Epsilon = 0.01f;
     static string[] _fixedUnits = { "", "K", "M", "B", "T" };
     public static string ToClickerString(float number, string format)
     {
