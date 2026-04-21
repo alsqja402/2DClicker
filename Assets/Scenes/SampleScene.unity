@@ -546,6 +546,9 @@ MonoBehaviour:
   _view: {fileID: 520699116}
   _enemyPrefabs:
   - {fileID: 6294920221347889180, guid: 1af4c7c83f0bab5448a8150dc84ae003, type: 3}
+  - {fileID: 3855044114936632902, guid: 490f1443f5f83de45bfb8214d9447563, type: 3}
+  - {fileID: 5965686468932616867, guid: cba5e6a1fb4dd74449e92423da21e66d, type: 3}
+  - {fileID: 7159650695090636084, guid: 4f5aca0f22f745a488985d5da56d8aae, type: 3}
   _enemyParent: {fileID: 2034963190}
   _enemyView: {fileID: 606233248}
   _baseHp: 100
