@@ -11,12 +11,12 @@ public class Enemy : MonoBehaviour
 
     DamageSpawner _damageSpawner;
 
-    public void Initialize(EnemyView view, Session session, float maxHp, DamageSpawner damageSpawner)
+    public void Initialize(EnemyView view, Session session, float maxHp, float rewardGold, DamageSpawner damageSpawner)
     {
         _view = view;   
         _session = session;
         _damageSpawner = damageSpawner; 
-        _model.Initialize(maxHp);
+        _model.Initialize(maxHp, rewardGold);
 
         _view.UpdateHp(_model.CurrentHp, _model.MaxHp);
     }
@@ -38,7 +38,7 @@ public class Enemy : MonoBehaviour
 
     void Die()
     {
-        _session.EnemyDead();
+        _session.EnemyDead(_model.RewardGold);
 
         Destroy(gameObject);
     }

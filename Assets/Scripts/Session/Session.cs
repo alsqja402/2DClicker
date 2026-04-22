@@ -1,6 +1,8 @@
 using DG.Tweening;
 using TMPro;
+using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Session : MonoBehaviour
 {
@@ -16,14 +18,14 @@ public class Session : MonoBehaviour
     [SerializeField] EnemyView _enemyView;
 
     [Header("적")]
-    [SerializeField] float _baseHp;
-    [SerializeField] float _hpMultiplier;
+    [SerializeField] SessionData _data;
 
     [SerializeField] DamageSpawner _damageSpawner;
     
     int _stageCount;
     int _killCount; 
     int _enemyCount = 3;
+    float _gold;
 
     public void Play()
     {
@@ -33,16 +35,23 @@ public class Session : MonoBehaviour
         _killCount = 0;
         _view.UpdateKillText(_killCount, _enemyCount);
 
+        _gold = 0f;
+        _view.UpdateGoldText(_gold);
+
         SpawnEnemy();
     }
 
-    public void EnemyDead()
+    public void EnemyDead(float rewardGold)
     {
         AddKillCount();
-        
+
+        AddGold(rewardGold);
+
         _view.UpdateStageText(_stageCount);
 
         _view.UpdateKillText(_killCount, _enemyCount);
+
+        _view.UpdateGoldText(_gold);
         SpawnEnemy();
     }
 
@@ -54,23 +63,14 @@ public class Session : MonoBehaviour
         _enemy = Instantiate(enemyprefab, _enemyParent);
 
         // 이거때매 적 스폰이 됐음 
-        float maxHp = GetHpByStage(_stageCount);
-        _enemy.Initialize(_enemyView, this, maxHp, _damageSpawner);
+        float maxHp = _data.GetHpByStage(_stageCount);
+        float rewardGold = _data.GetGoldByStage(_stageCount);
+        _enemy.Initialize(_enemyView, this, maxHp, rewardGold, _damageSpawner);
     }
 
     public void TapAttack()
     {
         _hero.Attack(_enemy);
-    }
-
-    public float GetHpByStage(int stage)
-    {
-        if(stage <= 0)
-        {
-            return _baseHp;
-        }
-
-        return _baseHp * Mathf.Pow(_hpMultiplier, stage);
     }
 
     // 킬 수 증가 및 스테이지 증가
@@ -83,5 +83,10 @@ public class Session : MonoBehaviour
             _stageCount++;
             _killCount = 0; 
         }
+    }
+
+    public void AddGold(float amount)
+    {
+        _gold += amount;
     }
 }

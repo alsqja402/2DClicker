@@ -8,10 +8,13 @@ public class View : MonoBehaviour
     [SerializeField] TMP_Text _killText;
 
     [SerializeField] RectTransform stageTextRect;
-    [SerializeField] TextMeshProUGUI _stageText;
+    [SerializeField] TMP_Text _stageText;
+
+    [SerializeField] TMP_Text _goldText;
+
     public void UpdateStageText(int stageCount)
     {
-        _stageText.text = $"스테이지 {stageCount + 1}";
+        _stageText.text = $"Stage {stageCount + 1}";
 
         // 애니메이션 겹침 방지
         stageTextRect.DOKill();
@@ -28,6 +31,11 @@ public class View : MonoBehaviour
     public void UpdateKillText(int killCount, int enemyCount)
     {
         _killText.text = $"{killCount}/{enemyCount}";
+    }
+
+    public void UpdateGoldText(float gold)
+    {
+        _goldText.text = gold.ToClickerString("{0:N0}");
     }
 }
 

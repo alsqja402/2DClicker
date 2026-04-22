@@ -1,16 +1,31 @@
 using UnityEngine;
 
-public class SessionData : MonoBehaviour
+[CreateAssetMenu(menuName = "ScriptableObjects/SessionData")]
+public class SessionData : ScriptableObject
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    [SerializeField] float _baseHp;
+    [SerializeField] float _hpMultiplier;
+
+    [SerializeField] float _baseGold;
+    [SerializeField] float _goldMultiplier;
+
+    public float GetHpByStage(int stage)
     {
-        
+        if (stage <= 0)
+        {
+            return _baseHp;
+        }
+
+        return _baseHp * Mathf.Pow(_hpMultiplier, stage);
     }
 
-    // Update is called once per frame
-    void Update()
+    public float GetGoldByStage(int stage)
     {
-        
+        if (stage <= 0)
+        {
+            return _baseGold;
+        }
+
+        return _baseGold * Mathf.Pow(_goldMultiplier, stage);
     }
 }

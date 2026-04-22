@@ -10,15 +10,19 @@ public class Hero : MonoBehaviour
     [SerializeField] HeroModel _model;
     [SerializeField] HeroRenderer _renderer;
 
-    public float playerDamage = 10;
+    public float _playerDamage = 10;
 
     public void Attack(Enemy enemy)
     {   
-        enemy.TakeHit(playerDamage);
+        enemy.TakeHit(_playerDamage);
 
         _renderer.Attack();
 
         Debug.Log("Hero Attack!");
     }
 
+    public void DamageUp()
+    {
+        _playerDamage += 10;
+    }
 }
