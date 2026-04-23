@@ -19,6 +19,8 @@ public class Menu : MonoBehaviour
     [SerializeField] Hero _hero;
     [SerializeField] Button _damageUpButton;
 
+    [SerializeField] Session _session;
+
     private Tweener _tween;
 
     private void Start()
@@ -31,7 +33,7 @@ public class Menu : MonoBehaviour
         _openButton.gameObject.SetActive(false);
         _closeButton.gameObject.SetActive(true);
 
-        _damageUpButton.onClick.AddListener(_hero.DamageUp);
+        //_damageUpButton.onClick.AddListener(TryDamageUp);
     }
 
     public void Open()
@@ -55,4 +57,16 @@ public class Menu : MonoBehaviour
         _openButton.gameObject.SetActive(true);
         _closeButton.gameObject.SetActive(false);
     }
+
+    //public void TryDamageUp()
+    //{
+    //    if (_session.TryPayGold(10.0f))
+    //    {
+    //        _hero.DamageUp();
+    //    }
+    //    else
+    //    {
+    //        Debug.Log("골드가 부족합니다.");
+    //    }
+    //}
 }

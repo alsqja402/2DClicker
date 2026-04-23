@@ -11,6 +11,8 @@ public class Hero : MonoBehaviour
     [SerializeField] HeroRenderer _renderer;
 
     public float _playerDamage = 10;
+    public float _CriMultiple = 1.5f; 
+    public float _CriPercent = 5.0f;
 
     public void Attack(Enemy enemy)
     {   
@@ -24,5 +26,18 @@ public class Hero : MonoBehaviour
     public void DamageUp()
     {
         _playerDamage += 10;
+    }
+
+    public void IncreaseDamage(float amount)
+    {
+        _playerDamage += amount;
+    }
+    public void IncreaseCriMultiple(float amount)
+    {
+        _CriMultiple += amount;
+    }
+    public void IncreaseCriPercent(float amount)
+    {
+        _CriPercent += amount;
     }
 }

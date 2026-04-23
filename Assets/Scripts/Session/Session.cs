@@ -1,6 +1,5 @@
 using DG.Tweening;
 using TMPro;
-using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -21,11 +20,17 @@ public class Session : MonoBehaviour
     [SerializeField] SessionData _data;
 
     [SerializeField] DamageSpawner _damageSpawner;
-    
+
+    [SerializeField] UpgraderView _upgraderView;
+
     int _stageCount;
     int _killCount; 
     int _enemyCount = 3;
     float _gold;
+    int _level;
+    float _sum;
+
+    public float Gold => _gold;
 
     public void Play()
     {
@@ -39,6 +44,8 @@ public class Session : MonoBehaviour
         _view.UpdateGoldText(_gold);
 
         SpawnEnemy();
+
+        _upgraderView.UpdateView(_level, _sum);
     }
 
     public void EnemyDead(float rewardGold)
@@ -88,5 +95,17 @@ public class Session : MonoBehaviour
     public void AddGold(float amount)
     {
         _gold += amount;
+    }
+
+    // 돈 지불하는거
+    public bool TryPayGold(float amount)
+    {
+        if (_gold >= amount)
+        {
+            _gold -= amount;
+            _view.UpdateGoldText(_gold);
+            return true;
+        }
+        return false;
     }
 }

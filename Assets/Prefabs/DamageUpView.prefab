@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4301156412548066097}
   - component: {fileID: 5481785455294704219}
   - component: {fileID: 5765889990544538871}
+  - component: {fileID: -4837131563020284775}
   m_Layer: 5
   m_Name: DamageUpView
   m_TagString: Untagged
@@ -79,6 +80,21 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &-4837131563020284775
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1793878211370074451}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a1fc58dcdeb469a40b9ba0978d8230bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _levelText: {fileID: 2917555890218610646}
+  _nameDamageText: {fileID: 4388206421761390408}
+  _nameDamageFormat: 'Damage: {0:N2}'
 --- !u!1 &3159919397908069366
 GameObject:
   m_ObjectHideFlags: 0
