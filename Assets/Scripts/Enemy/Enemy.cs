@@ -22,11 +22,11 @@ public class Enemy : MonoBehaviour
     }
 
 
-    public void TakeHit(float damage)
+    public void TakeHit(float damage, bool isCritical = false)
     {
         _model.TakeDamage(damage);
 
-        _damageSpawner.SpawnDamageView(_damageViewPoint.position, damage);
+        _damageSpawner.SpawnDamageView(_damageViewPoint.position, damage, isCritical);
 
         _view.UpdateHp(_model.CurrentHp, _model.MaxHp);
 

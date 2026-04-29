@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-using static UnityEditor.PlayerSettings;
 
 public class DamageSpawner : MonoBehaviour
 {
@@ -43,11 +42,11 @@ public class DamageSpawner : MonoBehaviour
         damageView.UpdateDamage(damage);
     }   
 
-    public void SpawnDamageView(Vector3 pos, float damage)
+    public void SpawnDamageView(Vector3 pos, float damage, bool isCritical = false)
     {
         DamageView damageView = Instantiate(_damageViewPrefab, _damageSpawnPoint);
         Vector3 screenPos = Camera.main.WorldToScreenPoint(pos);    // 스크린 좌표
         damageView.transform.position = screenPos;
-        damageView.UpdateDamage(damage);
+        damageView.UpdateDamage(damage, isCritical);
     }
 }

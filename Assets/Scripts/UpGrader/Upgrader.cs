@@ -1,6 +1,5 @@
 using UnityEngine;
 
-// 1. ¾÷±×·¹ÀÌµå
 
 public class Upgrader : MonoBehaviour
 {
@@ -12,9 +11,13 @@ public class Upgrader : MonoBehaviour
 
     [SerializeField] int[] _levels;
 
+    private void Start()
+    {
+        UpdateAllViews();
+    }
 
     /// <summary>
-    /// ¾÷±×·¹ÀÌµå ÇÔ¼ö
+    /// ì—…ê·¸ë ˆì´ë“œ í•¨ìˆ˜
     /// </summary>
     /// <param name="index"></param>
     public void Upgrade(int index)
@@ -26,26 +29,64 @@ public class Upgrader : MonoBehaviour
         if(_session.TryPayGold(cost) == true)
         {
             _levels[index]++;
-            float increaseAmount = _datas[index].GetIncreaseAmount(level);
-            // Áõ°¡·® Àû¿ë ·ÎÁ÷ ÇÊ¿ä
+            float increaseAmount = _datas[index].GetIncreaseAmount(_levels[index]);
+            float currentValue = 0;
+            // ì¦ê°€ëŸ‰ ì ìš© ë¡œì§ í•„ìš”
             switch (index)
             {
                 case 0: 
                     _hero.IncreaseDamage(increaseAmount);
+                    currentValue = _hero._playerDamage;
                     break;
                 case 1: 
                     _hero.IncreaseCriMultiple(increaseAmount);
+                    currentValue = _hero._criMultiple;
                     break;
                 case 2:
                     _hero.IncreaseCriPercent(increaseAmount);
+                    currentValue = _hero._criPercent;
                     break;
             }
+            float nextCost = _datas[index].GetCost(_levels[index]);
+            float nextIncreaseAmount = _datas[index].GetIncreaseAmount(_levels[index] + 1);
+            
 
-            _views[index].UpdateView(_levels[index], increaseAmount);
+            _views[index].UpdateView(_levels[index], currentValue, nextCost, nextIncreaseAmount);
         }
         else
         {
-            Debug.Log("°ñµå°¡ ºÎÁ·ÇÕ´Ï´Ù.");
+            Debug.Log("ê³¨ë“œê°€ ë¶€ì¡±í•©ë‹ˆë‹¤.");
+        }
+    }
+
+    public void UpdateView(int index)
+    {
+        if (index < 0 || index >= _datas.Length)
+            return;
+        int level = _levels[index];
+        float increaseAmount = _datas[index].GetIncreaseAmount(level + 1);
+        float cost = _datas[index].GetCost(level);
+        float currentValue = 0;
+        switch (index)
+        {
+            case 0:
+                currentValue = _hero._playerDamage;
+                break;
+            case 1:
+                currentValue = _hero._criMultiple;
+                break;
+            case 2:
+                currentValue = _hero._criPercent;
+                break;
+        }
+        _views[index].UpdateView(level, currentValue, cost, increaseAmount);
+    }
+
+    public void UpdateAllViews()
+    {
+        for (int i = 0; i < _datas.Length; i++)
+        {
+            UpdateView(i);
         }
     }
 }

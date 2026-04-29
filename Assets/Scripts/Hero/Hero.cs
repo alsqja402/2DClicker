@@ -11,21 +11,26 @@ public class Hero : MonoBehaviour
     [SerializeField] HeroRenderer _renderer;
 
     public float _playerDamage = 10;
-    public float _CriMultiple = 1.5f; 
-    public float _CriPercent = 5.0f;
+    public float _criMultiple = 1.5f; 
+    public float _criPercent = 0.05f;
 
     public void Attack(Enemy enemy)
     {   
-        enemy.TakeHit(_playerDamage);
+        float finalDamage = _playerDamage * _criMultiple;
+
+        if (Random.value < _criPercent)
+        {
+            enemy.TakeHit(finalDamage, true);
+            Debug.Log("크리");
+        }
+        else
+        {
+            enemy.TakeHit(_playerDamage);
+        }
 
         _renderer.Attack();
 
         Debug.Log("Hero Attack!");
-    }
-
-    public void DamageUp()
-    {
-        _playerDamage += 10;
     }
 
     public void IncreaseDamage(float amount)
@@ -34,10 +39,10 @@ public class Hero : MonoBehaviour
     }
     public void IncreaseCriMultiple(float amount)
     {
-        _CriMultiple += amount;
+        _criMultiple += amount;
     }
     public void IncreaseCriPercent(float amount)
     {
-        _CriPercent += amount;
+        _criPercent += amount;
     }
 }

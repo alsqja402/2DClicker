@@ -94,6 +94,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _levelText: {fileID: 2917555890218610646}
   _nameDamageText: {fileID: 4388206421761390408}
+  _upgradeButtonCostText: {fileID: 7961918316572971838}
+  _upgradeButtonValueText: {fileID: 2929018506837880572}
   _nameDamageFormat: 'Damage: {0:N2}'
 --- !u!1 &3159919397908069366
 GameObject:

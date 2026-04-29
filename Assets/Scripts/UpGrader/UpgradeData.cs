@@ -1,29 +1,33 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 
-// 1. ·¹º§º° ºñ¿ë
-// 2. ·¹º§º° Áõ°¡·®
+// 1. ë ˆë²¨ë³„ ë¹„ìš©
+// 2. ë ˆë²¨ë³„ ì¦ê°€ëŸ‰
 
 [CreateAssetMenu(menuName = "ScriptableObjects/UpgradeData")]
 public class UpgradeData : ScriptableObject
 {
-    // ±âº» ºñ¿ë (ex: 10°ñµå)
-    // ºñ¿ë Áõ°¡À² (ex: 1.5¹è)
+    // ê¸°ë³¸ ë¹„ìš© (ex: 10ê³¨ë“œ)
+    // ë¹„ìš© ì¦ê°€ìœ¨ (ex: 1.5ë°°)
     [SerializeField] float _baseCost;
     [SerializeField] float _costMultiplier;
 
-    // ±âº» ½ºÅÈ Áõ°¡·® (ex: 5µ¥¹ÌÁö)
-    // ½ºÅÈ Áõ°¡·® Áõ°¡À² (ex: 1.2¹è)
+    // ê¸°ë³¸ ìŠ¤íƒ¯ ì¦ê°€ëŸ‰ (ex: 5ë°ë¯¸ì§€)
+    // ìŠ¤íƒ¯ ì¦ê°€ëŸ‰ ì¦ê°€ìœ¨ (ex: 1.2ë°°)
     [SerializeField] float _baseIncreaseAmount;
     [SerializeField] float _increaseAmountMultiplier;
 
     public float GetCost(int level)
     {
-        // ºñ¿ë °è»ê ·ÎÁ÷
+        // ë¹„ìš© ê³„ì‚° ë¡œì§
         return _baseCost * Mathf.Pow(_costMultiplier, level);
     }
     public float GetIncreaseAmount(int level)
     {
-        // Áõ°¡·® °è»ê ·ÎÁ÷
-        return _baseIncreaseAmount * Mathf.Pow(_increaseAmountMultiplier, level);
+        if(level <= 0)
+        {
+            return 0;
+        }
+        // ì¦ê°€ëŸ‰ ê³„ì‚° ë¡œì§
+        return _baseIncreaseAmount * Mathf.Pow(_increaseAmountMultiplier, level - 1);
     }
 }

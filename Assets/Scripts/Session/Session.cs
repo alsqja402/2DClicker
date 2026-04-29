@@ -29,6 +29,8 @@ public class Session : MonoBehaviour
     float _gold;
     int _level;
     float _sum;
+    float _cost;
+    float _value;
 
     public float Gold => _gold;
 
@@ -45,7 +47,7 @@ public class Session : MonoBehaviour
 
         SpawnEnemy();
 
-        _upgraderView.UpdateView(_level, _sum);
+        _upgraderView.UpdateView(_level, _sum, _cost, _value);
     }
 
     public void EnemyDead(float rewardGold)
