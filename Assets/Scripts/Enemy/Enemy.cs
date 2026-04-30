@@ -7,6 +7,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] EnemyView _view;
     [SerializeField] Transform _damageViewPoint;
 
+
     Session _session;
 
     DamageSpawner _damageSpawner;

@@ -10,6 +10,7 @@ public class Session : MonoBehaviour
     [SerializeField] Enemy _enemy;
 
     [SerializeField] View _view;
+    [SerializeField] GoldSpawner _goldSpawner;
 
     [Header("컴포넌트")]
     [SerializeField] Enemy[] _enemyPrefabs;
@@ -59,6 +60,8 @@ public class Session : MonoBehaviour
         _view.UpdateStageText(_stageCount);
 
         _view.UpdateKillText(_killCount, _enemyCount);
+
+        _goldSpawner.GoldSpawnerView(_enemy.transform.position);
 
         _view.UpdateGoldText(_gold);
         SpawnEnemy();
