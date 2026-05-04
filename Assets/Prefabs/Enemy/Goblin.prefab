@@ -73,6 +73,8 @@ MonoBehaviour:
   _model: {fileID: 6258858880018302643}
   _view: {fileID: 0}
   _damageViewPoint: {fileID: 6440955183644771749}
+  _duration: 0.5
+  _spriteRenderer: {fileID: 8017019660664108754}
 --- !u!114 &6258858880018302643
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -37,6 +37,6 @@ public class UpgraderView : MonoBehaviour
         UpdateLevel(level);
         UpdateNameDamageText(sum);
         UpdateUpgradeButtonCostText(cost);
-        UpdateUpgradeButtonValueText(value);    
+        UpdateUpgradeButtonValueText(value);
     }
 }

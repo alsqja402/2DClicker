@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using DG.Tweening;
 
 public class Enemy : MonoBehaviour
 {
@@ -6,11 +7,14 @@ public class Enemy : MonoBehaviour
     [SerializeField] EnemyModel _model;
     [SerializeField] EnemyView _view;
     [SerializeField] Transform _damageViewPoint;
+    [SerializeField] float _duration;
 
+    [SerializeField] SpriteRenderer _spriteRenderer;
 
     Session _session;
 
     DamageSpawner _damageSpawner;
+
 
     public void Initialize(EnemyView view, Session session, float maxHp, float rewardGold, DamageSpawner damageSpawner)
     {
@@ -20,6 +24,8 @@ public class Enemy : MonoBehaviour
         _model.Initialize(maxHp, rewardGold);
 
         _view.UpdateHp(_model.CurrentHp, _model.MaxHp);
+
+        //_spriteRenderer.DOFade(1f, _duration);
     }
 
 
@@ -41,6 +47,10 @@ public class Enemy : MonoBehaviour
     {
         _session.EnemyDead(_model.RewardGold);
 
-        Destroy(gameObject);
+        _spriteRenderer.DOFade(0f, _duration).OnComplete(() =>
+        {
+            Destroy(gameObject);
+        });
+        //Destroy(gameObject);
     }
 }

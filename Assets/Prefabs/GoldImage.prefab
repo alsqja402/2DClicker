@@ -90,3 +90,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _goldImage: {fileID: 5195367373877084470}
   _target: {fileID: 635225550649485942}
+  _scatterRadius: 100
+  _scatterDuration: 0.2
+  _moveDuration: 1

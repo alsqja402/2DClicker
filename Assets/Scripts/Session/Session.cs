@@ -24,6 +24,8 @@ public class Session : MonoBehaviour
 
     [SerializeField] UpgraderView _upgraderView;
 
+    //[SerializeField] SpriteRenderer _enemySprite;
+
     int _stageCount;
     int _killCount; 
     int _enemyCount = 3;
@@ -31,7 +33,7 @@ public class Session : MonoBehaviour
     int _level;
     float _sum;
     float _cost;
-    float _value;
+    float _upgradeAmount;
 
     public float Gold => _gold;
 
@@ -44,11 +46,11 @@ public class Session : MonoBehaviour
         _view.UpdateKillText(_killCount, _enemyCount);
 
         _gold = 0f;
-        _view.UpdateGoldText(_gold);
+        _view.UpdateGoldText(0f, _gold);
 
         SpawnEnemy();
 
-        _upgraderView.UpdateView(_level, _sum, _cost, _value);
+        _upgraderView.UpdateView(_level, _sum, _cost, _upgradeAmount);
     }
 
     public void EnemyDead(float rewardGold)
@@ -63,7 +65,6 @@ public class Session : MonoBehaviour
 
         _goldSpawner.GoldSpawnerView(_enemy.transform.position);
 
-        _view.UpdateGoldText(_gold);
         SpawnEnemy();
     }
 
@@ -71,6 +72,12 @@ public class Session : MonoBehaviour
     {
         int randomIndex = Random.Range(0, _enemyPrefabs.Length);
         Enemy enemyprefab = _enemyPrefabs[randomIndex];
+
+        //_enemySprite.DOFade(1f, _duration).OnComplete(() =>
+        //    {
+        //        _enemy = Instantiate(enemyprefab, _enemyParent);
+        //    });
+
 
         _enemy = Instantiate(enemyprefab, _enemyParent);
 
@@ -99,7 +106,9 @@ public class Session : MonoBehaviour
 
     public void AddGold(float amount)
     {
+        float prevGold = _gold;
         _gold += amount;
+        _view.UpdateGoldText(prevGold, _gold);
     }
 
     // 돈 지불하는거
@@ -107,8 +116,9 @@ public class Session : MonoBehaviour
     {
         if (_gold >= amount)
         {
+            float prevGold = _gold;
             _gold -= amount;
-            _view.UpdateGoldText(_gold);
+            _view.UpdateGoldText(prevGold, _gold);
             return true;
         }
         return false;

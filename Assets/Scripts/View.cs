@@ -33,9 +33,15 @@ public class View : MonoBehaviour
         _killText.text = $"{killCount}/{enemyCount}";
     }
 
-    public void UpdateGoldText(float gold)
+    //public void UpdateGoldText(float gold)
+    //{
+    //    _goldText.text = gold.ToClickerString("{0:N0}");
+        
+    //}
+
+    public void UpdateGoldText(float prevGold, float gold)
     {
-        _goldText.text = gold.ToClickerString("{0:N0}");
+        DOVirtual.Float(prevGold, gold, 0.8f, value => _goldText.text = value.ToClickerString("{0:N0}"));
     }
 }
 
