@@ -13,6 +13,18 @@ PrefabInstance:
       value: Slime
       objectReference: {fileID: 0}
     - target: {fileID: 1263892492645100051, guid: 1af4c7c83f0bab5448a8150dc84ae003, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1263892492645100051, guid: 1af4c7c83f0bab5448a8150dc84ae003, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1263892492645100051, guid: 1af4c7c83f0bab5448a8150dc84ae003, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1263892492645100051, guid: 1af4c7c83f0bab5448a8150dc84ae003, type: 3}
       propertyPath: m_LocalPosition.x
       value: 1
       objectReference: {fileID: 0}
@@ -52,10 +64,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1263892492645100051, guid: 1af4c7c83f0bab5448a8150dc84ae003, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5456534569750465109, guid: 1af4c7c83f0bab5448a8150dc84ae003, type: 3}
       propertyPath: m_SpriteLibraryAsset
       value: 
       objectReference: {fileID: 7108339969198208228, guid: d8ab3669014479d418a6df0649bb611f, type: 3}
+    - target: {fileID: 6294920221347889180, guid: 1af4c7c83f0bab5448a8150dc84ae003, type: 3}
+      propertyPath: _deathParticle
+      value: 
+      objectReference: {fileID: 1375353507806458937, guid: f826ea9e48810ca438671dbf3c4be0ff, type: 3}
     - target: {fileID: 6440955183644771749, guid: 1af4c7c83f0bab5448a8150dc84ae003, type: 3}
       propertyPath: m_LocalPosition.y
       value: 1.2

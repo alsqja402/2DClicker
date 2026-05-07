@@ -24,6 +24,8 @@ public class Session : MonoBehaviour
 
     [SerializeField] UpgraderView _upgraderView;
 
+    [SerializeField] Particle _particle;
+
     //[SerializeField] SpriteRenderer _enemySprite;
 
     int _stageCount;
@@ -56,6 +58,8 @@ public class Session : MonoBehaviour
     public void EnemyDead(float rewardGold)
     {
         AddKillCount();
+
+        //_particle.DeathParticle(_enemy.transform.position); 
 
         AddGold(rewardGold);
 

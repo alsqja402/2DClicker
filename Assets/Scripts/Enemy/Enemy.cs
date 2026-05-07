@@ -9,6 +9,9 @@ public class Enemy : MonoBehaviour
     [SerializeField] Transform _damageViewPoint;
     [SerializeField] float _duration;
 
+    [SerializeField] ParticleSystem _deathParticle;
+    [SerializeField] Transform _deathParticlePoint;
+
     [SerializeField] SpriteRenderer _spriteRenderer;
 
     Session _session;
@@ -42,15 +45,23 @@ public class Enemy : MonoBehaviour
             Die();
         }
     }
+    public void DeathParticle(Vector3 pos)
+    {
+        //transform.position = pos;
+        Instantiate(_deathParticle,
+            pos,
+            Quaternion.identity);
+    }
 
     void Die()
     {
         _session.EnemyDead(_model.RewardGold);
 
+        DeathParticle(_deathParticlePoint.position);
+
         _spriteRenderer.DOFade(0f, _duration).OnComplete(() =>
         {
             Destroy(gameObject);
         });
-        //Destroy(gameObject);
     }
 }
