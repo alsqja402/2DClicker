@@ -8,6 +8,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 422134935543463729, guid: 1af4c7c83f0bab5448a8150dc84ae003, type: 3}
+      propertyPath: m_Size.x
+      value: 1.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 422134935543463729, guid: 1af4c7c83f0bab5448a8150dc84ae003, type: 3}
+      propertyPath: m_Offset.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 455940010570921704, guid: 1af4c7c83f0bab5448a8150dc84ae003, type: 3}
       propertyPath: m_Name
       value: Orc

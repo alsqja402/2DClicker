@@ -8,6 +8,7 @@ public class PlayScene : MonoBehaviour
     private void Start()
     {
         _session.Play();
+
     }
 
     public void Tap()

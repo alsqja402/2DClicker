@@ -13,11 +13,12 @@ public class Enemy : MonoBehaviour
     [SerializeField] Transform _deathParticlePoint;
 
     [SerializeField] SpriteRenderer _spriteRenderer;
+    [SerializeField] Transform _hitPoint;          
 
     Session _session;
 
     DamageSpawner _damageSpawner;
-
+    public Transform HitPoint => _hitPoint;
 
     public void Initialize(EnemyView view, Session session, float maxHp, float rewardGold, DamageSpawner damageSpawner)
     {
@@ -47,7 +48,7 @@ public class Enemy : MonoBehaviour
     }
     public void DeathParticle(Vector3 pos)
     {
-        //transform.position = pos;
+        // 파티클 없애는 작업 해야함
         Instantiate(_deathParticle,
             pos,
             Quaternion.identity);

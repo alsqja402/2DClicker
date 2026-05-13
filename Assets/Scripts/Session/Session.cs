@@ -7,24 +7,25 @@ public class Session : MonoBehaviour
 {
     [Header("컴포넌트")]
     [SerializeField] Hero _hero;
-    [SerializeField] Enemy _enemy;
+    [SerializeField] SessionData _data;
 
+    [Header("뷰")]
     [SerializeField] View _view;
-    [SerializeField] GoldSpawner _goldSpawner;
-
-    [Header("컴포넌트")]
-    [SerializeField] Enemy[] _enemyPrefabs;
-    [SerializeField] Transform _enemyParent;
+    [SerializeField] UpgraderView _upgraderView;
+    //[SerializeField] AllyUpgraderView _allyUpgraderView;
     [SerializeField] EnemyView _enemyView;
 
     [Header("적")]
-    [SerializeField] SessionData _data;
+    [SerializeField] Enemy _enemy;
+    [SerializeField] Enemy[] _enemyPrefabs;
+    [SerializeField] Transform _enemyParent;
 
+    [Header("이펙트")]
     [SerializeField] DamageSpawner _damageSpawner;
-
-    [SerializeField] UpgraderView _upgraderView;
-
+    [SerializeField] GoldSpawner _goldSpawner;
     [SerializeField] Particle _particle;
+
+    public Enemy CurrentEnemy => _enemy;
 
     //[SerializeField] SpriteRenderer _enemySprite;
 
@@ -59,8 +60,6 @@ public class Session : MonoBehaviour
     {
         AddKillCount();
 
-        //_particle.DeathParticle(_enemy.transform.position); 
-
         AddGold(rewardGold);
 
         _view.UpdateStageText(_stageCount);
@@ -76,12 +75,6 @@ public class Session : MonoBehaviour
     {
         int randomIndex = Random.Range(0, _enemyPrefabs.Length);
         Enemy enemyprefab = _enemyPrefabs[randomIndex];
-
-        //_enemySprite.DOFade(1f, _duration).OnComplete(() =>
-        //    {
-        //        _enemy = Instantiate(enemyprefab, _enemyParent);
-        //    });
-
 
         _enemy = Instantiate(enemyprefab, _enemyParent);
 

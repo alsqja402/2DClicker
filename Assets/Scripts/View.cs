@@ -30,7 +30,7 @@ public class View : MonoBehaviour
 
     public void UpdateKillText(int killCount, int enemyCount)
     {
-        _killText.text = $"{killCount}/{enemyCount}";
+        _killText.text = $"{killCount + 1}/{enemyCount}";
     }
 
     //public void UpdateGoldText(float gold)
