@@ -20,6 +20,11 @@ public class Session : MonoBehaviour
     [SerializeField] Enemy[] _enemyPrefabs;
     [SerializeField] Transform _enemyParent;
 
+    [Header("보스")]
+    [SerializeField] Boss _boss;
+    [SerializeField] Boss[] _bossPrefabs;
+    [SerializeField] Transform _bossParent;
+
     [Header("이펙트")]
     [SerializeField] DamageSpawner _damageSpawner;
     [SerializeField] GoldSpawner _goldSpawner;
@@ -38,11 +43,13 @@ public class Session : MonoBehaviour
     float _cost;
     float _upgradeAmount;
 
+    bool _bossIn = false;
+
     public float Gold => _gold;
 
     public void Play()
     {
-        _stageCount = 0;
+        _stageCount = 1;
         _view.UpdateStageText(_stageCount);
 
         _killCount = 0;
@@ -54,6 +61,7 @@ public class Session : MonoBehaviour
         SpawnEnemy();
 
         _upgraderView.UpdateView(_level, _sum, _cost, _upgradeAmount);
+
     }
 
     public void EnemyDead(float rewardGold)
@@ -62,12 +70,28 @@ public class Session : MonoBehaviour
 
         AddGold(rewardGold);
 
-        _view.UpdateStageText(_stageCount);
-
         _view.UpdateKillText(_killCount, _enemyCount);
 
         _goldSpawner.GoldSpawnerView(_enemy.transform.position);
 
+        if (_bossIn == true)
+        {
+            SpawnBoss();
+        }
+        else
+        {
+            SpawnEnemy();
+        }
+    }
+    public void BossDead(float rewardGold)
+    {
+        _stageCount++;
+        _killCount = 0;
+        _enemyCount = 3;
+        AddGold(rewardGold);
+        _view.UpdateStageText(_stageCount);
+        _view.UpdateKillText(_killCount, _enemyCount);
+        _bossIn = false;
         SpawnEnemy();
     }
 
@@ -84,20 +108,52 @@ public class Session : MonoBehaviour
         _enemy.Initialize(_enemyView, this, maxHp, rewardGold, _damageSpawner);
     }
 
+    public void SpawnBoss()
+    {
+        _view.UpdateBossStageText(_stageCount);
+
+        _bossIn = true;
+
+        _enemyCount = 1;
+        _view.UpdateKillText(_killCount, _enemyCount);
+
+        int randomIndex = Random.Range(0, _bossPrefabs.Length);
+        Boss bossprefab = _bossPrefabs[randomIndex];
+
+        _boss = Instantiate(bossprefab, _bossParent);
+
+        float maxHp = _data.GetHpByStage(_stageCount) * 3;
+        float rewardGold = _data.GetGoldByStage(_stageCount) * 3;
+        _boss.Initialize(_enemyView, this, maxHp, rewardGold, _damageSpawner);
+    }
+
     public void TapAttack()
     {
-        _hero.Attack(_enemy);
+        if (_enemy != null)
+            _hero.Attack(_enemy);
+        else
+            _hero.BossAttack(_boss);
     }
 
     // 킬 수 증가 및 스테이지 증가
     public void AddKillCount()
     {
-        _killCount++; 
+        _killCount++;
 
         if(_killCount >= _enemyCount)
         {
-            _stageCount++;
-            _killCount = 0; 
+            // 보스가 출현하는 조건을 만족하면 보스 스폰
+            if (_stageCount % 3 == 0)
+            {
+                _killCount = 0;
+                _bossIn = true;
+            }
+            else 
+            {
+                _stageCount++;
+                _killCount = 0;
+                _view.UpdateStageText(_stageCount);
+            }
         }
     }
 

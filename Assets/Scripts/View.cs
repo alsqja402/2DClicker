@@ -9,12 +9,30 @@ public class View : MonoBehaviour
 
     [SerializeField] RectTransform stageTextRect;
     [SerializeField] TMP_Text _stageText;
+    [SerializeField] TMP_Text _bossStageText;
 
     [SerializeField] TMP_Text _goldText;
 
     public void UpdateStageText(int stageCount)
     {
-        _stageText.text = $"Stage {stageCount + 1}";
+        _stageText.text = $"Stage {stageCount}";
+        _stageText.color = Color.white;
+
+        // 애니메이션 겹침 방지
+        stageTextRect.DOKill();
+
+        // 스케일이 계속 커질 수 있음 
+        stageTextRect.localScale = Vector3.one;
+
+        Sequence seq = DOTween.Sequence();
+
+        seq.Append(stageTextRect.DOScale(1.25f, 0.15f).SetEase(Ease.OutBack));
+        seq.Append(stageTextRect.DOScale(1f, 0.2f).SetEase(Ease.InOutQuad));
+    }
+    public void UpdateBossStageText(int stageCount)
+    {
+        _stageText.text = $"Boss";
+        _stageText.color = Color.red;
 
         // 애니메이션 겹침 방지
         stageTextRect.DOKill();

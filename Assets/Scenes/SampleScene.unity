@@ -778,6 +778,10 @@ MonoBehaviour:
   - {fileID: 5965686468932616867, guid: cba5e6a1fb4dd74449e92423da21e66d, type: 3}
   - {fileID: 7159650695090636084, guid: 4f5aca0f22f745a488985d5da56d8aae, type: 3}
   _enemyParent: {fileID: 2034963190}
+  _boss: {fileID: 0}
+  _bossPrefabs:
+  - {fileID: -4821415804204735146, guid: f7ec63de86387be40bad1c16944edf0e, type: 3}
+  _bossParent: {fileID: 2003597152}
   _damageSpawner: {fileID: 109771486}
   _goldSpawner: {fileID: 696381297}
   _particle: {fileID: 0}
@@ -1489,6 +1493,7 @@ MonoBehaviour:
   _killText: {fileID: 1473595999}
   stageTextRect: {fileID: 1225522014}
   _stageText: {fileID: 1225522015}
+  _bossStageText: {fileID: 0}
   _goldText: {fileID: 2014981515}
 --- !u!1 &527687635
 GameObject:
@@ -8721,6 +8726,37 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: -20, y: -20}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &2003597150
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2003597152}
+  m_Layer: 0
+  m_Name: BossParent
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2003597152
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2003597150}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2014981513
 GameObject:
   m_ObjectHideFlags: 0
@@ -9793,3 +9829,4 @@ SceneRoots:
   - {fileID: 109771490}
   - {fileID: 1650684429}
   - {fileID: 696381296}
+  - {fileID: 2003597152}

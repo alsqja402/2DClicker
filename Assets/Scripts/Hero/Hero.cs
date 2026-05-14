@@ -33,6 +33,25 @@ public class Hero : MonoBehaviour
         Debug.Log("Hero Attack!");
     }
 
+    public void BossAttack(Boss boss)
+    {
+        float finalDamage = _playerDamage * _criMultiple;
+
+        if (Random.value < _criPercent)
+        {
+            boss.TakeHit(finalDamage, true);
+            Debug.Log("크리");
+        }
+        else
+        {
+            boss.TakeHit(_playerDamage);
+        }
+
+        _renderer.Attack();
+
+        Debug.Log("Hero Attack!");
+    }
+
     public void IncreaseDamage(float amount)
     {
         _playerDamage += amount;
