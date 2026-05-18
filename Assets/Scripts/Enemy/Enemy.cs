@@ -28,8 +28,6 @@ public class Enemy : MonoBehaviour
         _model.Initialize(maxHp, rewardGold);
 
         _view.UpdateHp(_model.CurrentHp, _model.MaxHp);
-
-        //_spriteRenderer.DOFade(1f, _duration);
     }
 
 
@@ -60,9 +58,10 @@ public class Enemy : MonoBehaviour
 
         DeathParticle(_deathParticlePoint.position);
 
-        _spriteRenderer.DOFade(0f, _duration).OnComplete(() =>
-        {
-            Destroy(gameObject);
-        });
+        //_spriteRenderer.DOFade(0f, _duration).SetAutoKill().OnComplete(() =>
+        //{
+        //    Destroy(gameObject);
+        //});
+        Destroy(gameObject);
     }
 }

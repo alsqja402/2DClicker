@@ -28,8 +28,6 @@ public class Boss : MonoBehaviour
         _model.Initialize(maxHp, rewardGold);
 
         _view.UpdateHp(_model.CurrentHp, _model.MaxHp);
-
-        //_spriteRenderer.DOFade(1f, _duration);
     }
 
 

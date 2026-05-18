@@ -32,8 +32,6 @@ public class Session : MonoBehaviour
 
     public Enemy CurrentEnemy => _enemy;
 
-    //[SerializeField] SpriteRenderer _enemySprite;
-
     int _stageCount;
     int _killCount; 
     int _enemyCount = 3;
@@ -111,8 +109,6 @@ public class Session : MonoBehaviour
     public void SpawnBoss()
     {
         _view.UpdateBossStageText(_stageCount);
-
-        _bossIn = true;
 
         _enemyCount = 1;
         _view.UpdateKillText(_killCount, _enemyCount);
