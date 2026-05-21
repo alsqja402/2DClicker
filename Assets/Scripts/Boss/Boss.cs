@@ -63,4 +63,10 @@ public class Boss : MonoBehaviour
             Destroy(gameObject);
         });
     }
+
+    public void DestroyBoss()
+    {
+        Destroy(gameObject);
+        Destroy(_model);
+    }
 }

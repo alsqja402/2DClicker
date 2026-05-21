@@ -8,6 +8,8 @@ public class DarkWizard : MonoBehaviour
     [SerializeField] Animator _animator;
     [SerializeField] Transform _darkBallSpawnPoint;
 
+    [SerializeField] ParticleSystem _darkBallParticle;
+
     [SerializeField] float _level;
     [SerializeField] float _darkBallSpeed;
     [SerializeField] float _darkBallDamage;
@@ -45,7 +47,7 @@ public class DarkWizard : MonoBehaviour
     {
         Bullet darkBall = Instantiate(_darkBallPrefab);
         darkBall.transform.position = _darkBallSpawnPoint.position;
-        darkBall.Initialize(_session, _darkBallSpeed, _darkBallDamage);
+        darkBall.Initialize(_session, _darkBallSpeed, _darkBallDamage, _darkBallParticle);
     }
 
     public void UpgradeDarkWizard(float amount)

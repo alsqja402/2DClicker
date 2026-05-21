@@ -73,8 +73,9 @@ MonoBehaviour:
   _arrowPrefab: {fileID: 5298750048001248446, guid: 836ba22f55a4fce41b320961939a299c, type: 3}
   _animator: {fileID: 2926396342641302399}
   _arrowSpawnPoint: {fileID: 2221104533340486279}
+  _arrowParticle: {fileID: 1623298396792479162, guid: 1468eeb0963ddad41909c04ad8af0aee, type: 3}
   _level: 0
-  _arrowSpeed: 2
+  _arrowSpeed: 5
   _arrowDamage: 10
   _attackSpan: 1.2
 --- !u!1 &7518624372169255937
@@ -186,7 +187,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -3450133095002218573, guid: d56def12218a1b344a6fbe78692cb4e3, type: 3}
+  m_Sprite: {fileID: -8502188156620399341, guid: d56def12218a1b344a6fbe78692cb4e3, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

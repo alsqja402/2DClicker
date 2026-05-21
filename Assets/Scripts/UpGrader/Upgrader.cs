@@ -82,11 +82,30 @@ public class Upgrader : MonoBehaviour
         _views[index].UpdateView(level, currentValue, cost, increaseAmount);
     }
 
+    /// <summary>
+    /// UI 갱신
+    /// </summary>
     public void UpdateAllViews()
     {
         for (int i = 0; i < _datas.Length; i++)
         {
             UpdateView(i);
         }
+    }
+
+    /// <summary>
+    /// 환생했을 때 업그레이드 초기화
+    /// </summary>
+    public void ResetUpgrade()
+    {
+        // 업그레이드 레벨 초기화
+        for (int i = 0; i < _levels.Length; i++)
+        {
+            _levels[i] = 0;
+        }
+
+        _hero.ResetStats();
+
+        UpdateAllViews();
     }
 }

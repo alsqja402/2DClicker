@@ -71,9 +71,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _session: {fileID: 0}
   _animator: {fileID: 2926396342641302399}
+  _attackParticle: {fileID: 5940529053743077331, guid: 5ac977140a9e4f24aa42892a51e70731, type: 3}
   _damage: 8
   _level: 0
-  _attackSpan: 0.6
+  _attackSpan: 0.5
 --- !u!1 &7518624372169255937
 GameObject:
   m_ObjectHideFlags: 0

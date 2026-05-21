@@ -8,6 +8,8 @@ public class Archer : MonoBehaviour
     [SerializeField] Animator _animator;
     [SerializeField] Transform _arrowSpawnPoint;
 
+    [SerializeField] ParticleSystem _arrowParticle;
+
     [SerializeField] float _level;
     [SerializeField] float _arrowSpeed;
     [SerializeField] float _arrowDamage;
@@ -46,7 +48,7 @@ public class Archer : MonoBehaviour
         Bullet
         arrow = Instantiate(_arrowPrefab);
         arrow.transform.position = _arrowSpawnPoint.position;
-        arrow.Initialize(_session, _arrowSpeed, _arrowDamage);
+        arrow.Initialize(_session, _arrowSpeed, _arrowDamage, _arrowParticle);
     }
 
     public void UpgradeArcher(float amount)

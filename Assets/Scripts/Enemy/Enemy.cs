@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using DG.Tweening;
+using Mono.Cecil.Cil;
 
 public class Enemy : MonoBehaviour
 {
@@ -19,7 +20,7 @@ public class Enemy : MonoBehaviour
 
     DamageSpawner _damageSpawner;
     public Transform HitPoint => _hitPoint;
-
+    
     public void Initialize(EnemyView view, Session session, float maxHp, float rewardGold, DamageSpawner damageSpawner)
     {
         _view = view;   
@@ -46,7 +47,6 @@ public class Enemy : MonoBehaviour
     }
     public void DeathParticle(Vector3 pos)
     {
-        // 파티클 없애는 작업 해야함
         Instantiate(_deathParticle,
             pos,
             Quaternion.identity);
@@ -63,5 +63,11 @@ public class Enemy : MonoBehaviour
         //    Destroy(gameObject);
         //});
         Destroy(gameObject);
+    }
+
+    public void DestroyEnemy()
+    {
+        Destroy(gameObject);
+        Destroy(_model);
     }
 }

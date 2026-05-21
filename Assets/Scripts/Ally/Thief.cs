@@ -6,6 +6,8 @@ public class Thief : MonoBehaviour
 
     [SerializeField] Animator _animator;
 
+    [SerializeField] ParticleSystem _attackParticle;
+
     [SerializeField] float _damage;
     [SerializeField] float _level;
     [SerializeField] float _attackSpan;
@@ -38,7 +40,18 @@ public class Thief : MonoBehaviour
 
     public void ThiefAttack()
     {
-        _session.CurrentEnemy.TakeHit(_damage);
+        Vector3 hitpos;
+        if(_session.CurrentEnemy != null)
+        {
+            hitpos = _session.CurrentEnemy.HitPoint.position;
+            _session.CurrentEnemy.TakeHit(_damage);
+        }
+        else
+        {
+            hitpos = _session.CurrentBoss.HitPoint.position;
+            _session.CurrentBoss.TakeHit(_damage);  
+        }
+        Instantiate(_attackParticle, hitpos, Quaternion.identity);
     }
 
     public void UpgradeThief(float amount)

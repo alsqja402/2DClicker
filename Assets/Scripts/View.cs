@@ -9,9 +9,9 @@ public class View : MonoBehaviour
 
     [SerializeField] RectTransform stageTextRect;
     [SerializeField] TMP_Text _stageText;
-    [SerializeField] TMP_Text _bossStageText;
 
     [SerializeField] TMP_Text _goldText;
+    [SerializeField] TMP_Text _rebrithPointText;
 
     public void UpdateStageText(int stageCount)
     {
@@ -51,15 +51,14 @@ public class View : MonoBehaviour
         _killText.text = $"{killCount + 1}/{enemyCount}";
     }
 
-    //public void UpdateGoldText(float gold)
-    //{
-    //    _goldText.text = gold.ToClickerString("{0:N0}");
-        
-    //}
-
     public void UpdateGoldText(float prevGold, float gold)
     {
         DOVirtual.Float(prevGold, gold, 0.8f, value => _goldText.text = value.ToClickerString("{0:N0}"));
+    }
+
+    public void UpdateRebrithPointText(float prevRebirthPoint, float RebrithPoint)
+    {
+        DOVirtual.Float(prevRebirthPoint, RebrithPoint, 0.8f, value => _rebrithPointText.text = value.ToClickerString("{0:N0}"));
     }
 }
 

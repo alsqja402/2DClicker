@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _session: {fileID: 0}
-  _speed: 1
+  _speed: 20
   _damage: 15
 --- !u!1 &4248810132296245110
 GameObject:

@@ -8,6 +8,8 @@ public class FireWizard : MonoBehaviour
     [SerializeField] Animator _animator;
     [SerializeField] Transform _fireBallSpawnPoint;
 
+    [SerializeField] ParticleSystem _fireBallParticle;
+
     [SerializeField] float _level;
     [SerializeField] float _fireBallSpeed;
     [SerializeField] float _fireBallDamage;
@@ -47,7 +49,7 @@ public class FireWizard : MonoBehaviour
         Debug.Log("파이어볼 생성");
         Bullet fireBall = Instantiate(_fireBallPrefab);
         fireBall.transform.position = _fireBallSpawnPoint.position;
-        fireBall.Initialize(_session, _fireBallSpeed, _fireBallDamage);
+        fireBall.Initialize(_session, _fireBallSpeed, _fireBallDamage, _fireBallParticle);
     }
 
     public void UpgradeFireWizard(float amount)

@@ -7,18 +7,22 @@ public class Session : MonoBehaviour
 {
     [Header("컴포넌트")]
     [SerializeField] Hero _hero;
+    [SerializeField] Upgrader _upgrader;
     [SerializeField] SessionData _data;
+    [SerializeField] RebirthSessionData _rebirthData;
 
     [Header("뷰")]
     [SerializeField] View _view;
     [SerializeField] UpgraderView _upgraderView;
-    //[SerializeField] AllyUpgraderView _allyUpgraderView;
     [SerializeField] EnemyView _enemyView;
 
     [Header("적")]
     [SerializeField] Enemy _enemy;
     [SerializeField] Enemy[] _enemyPrefabs;
     [SerializeField] Transform _enemyParent;
+
+    [Header("동료")]
+    [SerializeField] AllyCtrl _allyCtrl;
 
     [Header("보스")]
     [SerializeField] Boss _boss;
@@ -29,21 +33,25 @@ public class Session : MonoBehaviour
     [SerializeField] DamageSpawner _damageSpawner;
     [SerializeField] GoldSpawner _goldSpawner;
     [SerializeField] Particle _particle;
+    [SerializeField] Rebirth _rebirth;
 
     public Enemy CurrentEnemy => _enemy;
+    public Boss CurrentBoss => _boss;
 
     int _stageCount;
     int _killCount; 
-    int _enemyCount = 3;
+    int _enemyCount;
     float _gold;
     int _level;
     float _sum;
     float _cost;
     float _upgradeAmount;
+    float _rebrithPoint;
 
     bool _bossIn = false;
 
     public float Gold => _gold;
+    public int StageCount => _stageCount;
 
     public void Play()
     {
@@ -51,15 +59,61 @@ public class Session : MonoBehaviour
         _view.UpdateStageText(_stageCount);
 
         _killCount = 0;
+        _enemyCount = 3;
+        _view.UpdateKillText(_killCount, _enemyCount);
+
+        _gold = 0f;
+        _view.UpdateGoldText(0f, _gold);
+
+        _rebrithPoint = 0f;
+        _view.UpdateRebrithPointText(0f, _rebrithPoint);
+
+        SpawnEnemy();
+
+        _upgraderView.UpdateView(_level, _sum, _cost, _upgradeAmount);
+
+    }
+
+    public void TestRebirth()
+    {
+        _rebirth.RebirthEffect(() =>
+        {
+            Debug.Log("실제 환생 처리");
+        });
+    }
+    public void Rebirth()
+    {
+        float rewardRebirthPoint = _rebirthData.GetRebirthPointByStage(_stageCount);
+
+        AddRebrithPoint(rewardRebirthPoint);
+
+        _upgrader.ResetUpgrade();
+
+        _allyCtrl.AllyAllDestroy();
+
+        _allyCtrl.ResetAlly();
+
+        if (_enemy != null)
+        {
+            _enemy.DestroyEnemy();
+        }
+        else
+        {
+            _boss.DestroyBoss();
+            _bossIn = false;
+        }
+
+        _stageCount = 1;
+        _view.UpdateStageText(_stageCount);
+
+        _killCount = 0;
+        _enemyCount = 3;
         _view.UpdateKillText(_killCount, _enemyCount);
 
         _gold = 0f;
         _view.UpdateGoldText(0f, _gold);
 
         SpawnEnemy();
-
-        _upgraderView.UpdateView(_level, _sum, _cost, _upgradeAmount);
-
     }
 
     public void EnemyDead(float rewardGold)
@@ -168,6 +222,25 @@ public class Session : MonoBehaviour
             float prevGold = _gold;
             _gold -= amount;
             _view.UpdateGoldText(prevGold, _gold);
+            return true;
+        }
+        return false;
+    }
+
+    public void AddRebrithPoint(float amount)
+    {
+        float prevRebirthPoint = _rebrithPoint;
+        _rebrithPoint += amount;
+        _view.UpdateRebrithPointText(prevRebirthPoint, _rebrithPoint);
+    }
+
+    public bool TryPayRebirthhPoint(float amount)
+    {
+        if (_rebrithPoint >= amount)
+        {
+            float prevRebirthPoint = _rebrithPoint;
+            _rebrithPoint -= amount;
+            _view.UpdateRebrithPointText(prevRebirthPoint, _rebrithPoint);
             return true;
         }
         return false;

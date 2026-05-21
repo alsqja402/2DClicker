@@ -22,11 +22,6 @@ public class AllyCtrl : MonoBehaviour
     [SerializeField] AllyUpgraderView[] _allyUpgraderViews;
     [SerializeField] int[] _levels;
 
-    private void Update()
-    {
-        
-    }
-
     private void Start()
     {
         UpdateAllyViews();
@@ -176,5 +171,26 @@ public class AllyCtrl : MonoBehaviour
         _thief = Instantiate(_thiefPrefab);
         _thief.transform.position = _thiefSpawnPoint.position;
         _thief.Initialize(_session, _thiefPrefab.Damage, _thiefPrefab.AttackSpan);
+    }
+
+    public void AllyAllDestroy()
+    {
+        if (_archer != null)
+            Destroy(_archer.gameObject);
+        if (_darkWizard != null)
+            Destroy(_darkWizard.gameObject);
+        if (_fireWizard != null)
+            Destroy(_fireWizard.gameObject);
+        if (_thief != null)
+            Destroy(_thief.gameObject);
+    }
+
+    public void ResetAlly()
+    {
+        for (int i = 0; i < _levels.Length; i++)
+        {
+            _levels[i] = 0;
+        }
+        UpdateAllyViews();
     }
 }
