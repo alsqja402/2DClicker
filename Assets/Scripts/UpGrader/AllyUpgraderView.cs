@@ -20,16 +20,17 @@ public class AllyUpgraderView : MonoBehaviour
     public void UpdateNameDamageText(float sum)
     {
         _nameDamageText.text = string.Format(_nameDamageFormat, sum);
+        _nameDamageText.text = sum.ToClickerString(_nameDamageFormat);
     }
 
     public void UpdateUpgradeButtonCostText(float cost)
     {
-        _upgradeButtonCostText.text = $"{cost:N0}";
+        _upgradeButtonCostText.text = cost.ToClickerString("{0:N0}");
     }
 
     public void UpdateUpgradeButtonValueText(float value)
     {
-        _upgradeButtonValueText.text = $"+{value:F2}";
+        _upgradeButtonValueText.text = value.ToClickerString("+{0:F2}");
     }
 
     public void UpdateView(int level, float sum, float cost, float value)

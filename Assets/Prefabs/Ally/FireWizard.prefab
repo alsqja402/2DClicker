@@ -75,7 +75,7 @@ MonoBehaviour:
   _fireBallSpawnPoint: {fileID: 2221104533340486279}
   _fireBallParticle: {fileID: 9222612009757004086, guid: 10d2ba47f9bc9324da311156e32a6c6c, type: 3}
   _level: 0
-  _fireBallSpeed: 15
+  _fireBallSpeed: 8
   _fireBallDamage: 15
   _attackSpan: 1.3
 --- !u!1 &7518624372169255937

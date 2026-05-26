@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 
-// 시프만 버튼을 누르면 계속 스폰됨, 레벨업시 데미지 증가하게 만들기
 public class AllyCtrl : MonoBehaviour
 {
     [SerializeField] Session _session;
@@ -12,6 +11,8 @@ public class AllyCtrl : MonoBehaviour
     [SerializeField] Transform _darkWizardSpawnPoint;
     [SerializeField] Transform _fireWizardSpawnPoint;
     [SerializeField] Transform _thiefSpawnPoint;
+
+    [SerializeField] ParticleSystem _AllySpawnParticle;
 
     Archer _archer;
     DarkWizard _darkWizard;
@@ -150,6 +151,7 @@ public class AllyCtrl : MonoBehaviour
         _archer = Instantiate(_archerPrefab);
         _archer.transform.position = _archerSpawnPoint.position;
         _archer.Initialize(_session, _archerPrefab.ArrowSpeed, _archerPrefab.ArrowDamage, _archerPrefab.AttackSpan);
+        Instantiate(_AllySpawnParticle, _archerSpawnPoint.position + new Vector3(0,0.5f,0), Quaternion.identity);
     }
 
     public void SpawnDarkWizard()
@@ -157,6 +159,7 @@ public class AllyCtrl : MonoBehaviour
         _darkWizard = Instantiate(_darkWizardPrefab);
         _darkWizard.transform.position = _darkWizardSpawnPoint.position;
         _darkWizard.Initialize(_session, _darkWizardPrefab.DarkBallSpeed, _darkWizardPrefab.DarkBallDamage, _darkWizardPrefab.AttackSpan);
+        Instantiate(_AllySpawnParticle, _darkWizardSpawnPoint.position + new Vector3(0, 0.5f, 0), Quaternion.identity);
     }
 
     public void SpawnFireWizard()
@@ -164,6 +167,7 @@ public class AllyCtrl : MonoBehaviour
         _fireWizard = Instantiate(_fireWizardPrefab);
         _fireWizard.transform.position = _fireWizardSpawnPoint.position;
         _fireWizard.Initialize(_session, _fireWizardPrefab.FireBallSpeed, _fireWizardPrefab.FireBallDamage, _fireWizardPrefab.AttackSpan);   
+        Instantiate(_AllySpawnParticle, _fireWizardSpawnPoint.position + new Vector3(0, 0.5f, 0), Quaternion.identity);
     }
 
     public void SpawnThief()
@@ -171,6 +175,7 @@ public class AllyCtrl : MonoBehaviour
         _thief = Instantiate(_thiefPrefab);
         _thief.transform.position = _thiefSpawnPoint.position;
         _thief.Initialize(_session, _thiefPrefab.Damage, _thiefPrefab.AttackSpan);
+        Instantiate(_AllySpawnParticle, _thiefSpawnPoint.position + new Vector3(0, 0.5f, 0), Quaternion.identity);
     }
 
     public void AllyAllDestroy()

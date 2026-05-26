@@ -1,4 +1,4 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 
 public class RebirthUpgrader : MonoBehaviour
 {
@@ -26,11 +26,11 @@ public class RebirthUpgrader : MonoBehaviour
                     {
                     _levels[index]++;
                     _session.Rebirth();
-                        Debug.Log("È¯»ı ¼º°ø");
+                        Debug.Log("í™˜ìƒ ì„±ê³µ");
                     }
                     else
                     {
-                        Debug.Log("È¯»ıÀ» ÇÒ ¼ö ÀÖ´Â ½ºÅ×ÀÌÁö°¡ ¾Æ´Õ´Ï´Ù.");
+                        Debug.Log("í™˜ìƒì„ í•  ìˆ˜ ìˆëŠ” ìŠ¤í…Œì´ì§€ê°€ ì•„ë‹™ë‹ˆë‹¤.");
                     }
                     break;
                 case 1:
@@ -46,7 +46,7 @@ public class RebirthUpgrader : MonoBehaviour
         }
         else
         {
-            Debug.Log("¸®¹ö½ºÆ÷ÀÎÆ®°¡ ºÎÁ·ÇÕ´Ï´Ù.");
+            Debug.Log("ë¦¬ë²„ìŠ¤í¬ì¸íŠ¸ê°€ ë¶€ì¡±í•©ë‹ˆë‹¤.");
         }
     }
 }

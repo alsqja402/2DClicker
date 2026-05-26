@@ -30,7 +30,7 @@ public class UpgraderView : MonoBehaviour
 
     public void UpdateUpgradeButtonValueText(float value)
     {
-        _upgradeButtonValueText.text = value.ToClickerString("{0:F2}");
+        _upgradeButtonValueText.text = value.ToClickerString("+{0:F2}");
     }
 
     public void UpdateView(int level, float sum, float cost, float value)

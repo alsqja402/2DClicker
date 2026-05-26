@@ -11255,6 +11255,7 @@ MonoBehaviour:
   _darkWizardSpawnPoint: {fileID: 1422685668}
   _fireWizardSpawnPoint: {fileID: 985353812}
   _thiefSpawnPoint: {fileID: 910205181}
+  _AllySpawnParticle: {fileID: 3584774378783718644, guid: cd3d579a2d65b3241a1812f639db37ec, type: 3}
   _datas:
   - {fileID: 11400000, guid: 6dea078c08b46f949a9ae301164f9093, type: 2}
   - {fileID: 11400000, guid: 5d2f1aac1b2e1144d906756911981c90, type: 2}
