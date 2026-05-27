@@ -118,6 +118,7 @@ public class Session : MonoBehaviour
 
     public void EnemyDead(float rewardGold)
     {
+
         AddKillCount();
 
         AddGold(rewardGold);
@@ -125,6 +126,8 @@ public class Session : MonoBehaviour
         _view.UpdateKillText(_killCount, _enemyCount);
 
         _goldSpawner.GoldSpawnerView(_enemy.transform.position);
+
+        _enemy = null;
 
         if (_bossIn == true)
         {
@@ -137,6 +140,7 @@ public class Session : MonoBehaviour
     }
     public void BossDead(float rewardGold)
     {
+        _boss = null;
         _stageCount++;
         _killCount = 0;
         _enemyCount = 3;

@@ -95,4 +95,22 @@ public class Hero : MonoBehaviour
         _criMultiple = _baseCriMultiple;
         _criPercent = _baseCriPercent;
     }
+
+    public void SkillAttack(Enemy enemy, float damage)
+    {
+        enemy.TakeHit(damage);
+
+        _renderer.Attack();
+
+        Debug.Log("Hero Skill Attack!");
+    }
+
+    public void BossSkillAttack(Boss boss, float damage)
+    {
+        boss.TakeHit(damage);
+
+        _renderer.Attack();
+
+        Debug.Log("Hero Boss Skill Attack!");
+    }
 }

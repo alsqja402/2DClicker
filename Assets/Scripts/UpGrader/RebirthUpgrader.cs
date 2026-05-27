@@ -3,6 +3,8 @@
 public class RebirthUpgrader : MonoBehaviour
 {
     [SerializeField] Session _session;
+    [SerializeField] Skill _skill;
+    [SerializeField] SkillUpgraderView _skillUpgraderView;
 
     [SerializeField] UpgradeData[] _datas;
     [SerializeField] RebirthUpgraderView[] _Rebirthviews;
@@ -34,6 +36,10 @@ public class RebirthUpgrader : MonoBehaviour
                     }
                     break;
                 case 1:
+                    _levels[index]++;
+                    _skill.IncreaseSkill1DamageMultiple(increaseAmount);
+                    currentValue = _skill.Skill1DamageMultiple;
+                    Debug.Log("Smite 강화 성공");
                     break;
                 case 2:
                     break;
@@ -41,7 +47,7 @@ public class RebirthUpgrader : MonoBehaviour
             float nextCost = _datas[index].GetCost(_levels[index]);
             float nextIncreaseAmount = _datas[index].GetIncreaseAmount(_levels[index] + 1);
 
-
+            _skillUpgraderView.UpdateView(_levels[index], currentValue, nextCost);
             _Rebirthviews[index].RebirthUpdateView(_levels[index], currentValue);
         }
         else

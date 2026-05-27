@@ -58,11 +58,11 @@ public class Enemy : MonoBehaviour
 
         DeathParticle(_deathParticlePoint.position);
 
-        //_spriteRenderer.DOFade(0f, _duration).SetAutoKill().OnComplete(() =>
-        //{
-        //    Destroy(gameObject);
-        //});
-        Destroy(gameObject);
+        _spriteRenderer.DOFade(0f, _duration).SetAutoKill().OnComplete(() =>
+        {
+            Destroy(gameObject);
+        });
+        //Destroy(gameObject);
     }
 
     public void DestroyEnemy()
