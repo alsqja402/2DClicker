@@ -76,6 +76,10 @@ public class Hero : MonoBehaviour
         Debug.Log("Hero Attack!");
     }
 
+    /// <summary>
+    /// 기본 강화
+    /// </summary>
+    /// <param name="amount"></param>
     public void IncreaseDamage(float amount)
     {
         _playerDamage += amount;
@@ -89,6 +93,9 @@ public class Hero : MonoBehaviour
         _criPercent += amount;
     }
 
+    /// <summary>
+    /// 환생용 초기화
+    /// </summary>
     public void ResetStats()
     {
         _playerDamage = _baseDamage;
@@ -96,6 +103,11 @@ public class Hero : MonoBehaviour
         _criPercent = _baseCriPercent;
     }
 
+    /// <summary>
+    /// 스킬 1(Smite)
+    /// </summary>
+    /// <param name="enemy"></param>
+    /// <param name="damage"></param>
     public void SkillAttack(Enemy enemy, float damage)
     {
         enemy.TakeHit(damage);
@@ -112,5 +124,19 @@ public class Hero : MonoBehaviour
         _renderer.Attack();
 
         Debug.Log("Hero Boss Skill Attack!");
+    }
+
+    /// <summary>
+    /// 스킬 2(Damage Buff)
+    /// </summary>
+    /// <param name="multiple"></param>
+    public void SetDamageBuff(float multiple)
+    {
+        _playerDamage *= multiple;
+    }
+
+    public void ResetDamageBuff(float multiple)
+    {
+        _playerDamage /= multiple;
     }
 }

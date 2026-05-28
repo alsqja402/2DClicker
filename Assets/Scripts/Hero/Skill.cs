@@ -8,6 +8,7 @@ public class Skill : MonoBehaviour
     [SerializeField] Hero _hero;
     [SerializeField] Session _session;
 
+    [Header("스킬 1")]
     [SerializeField] float _skill1DamageMultiple = 5f;
 
     [SerializeField] ParticleSystem _skill1Particle;
@@ -20,7 +21,20 @@ public class Skill : MonoBehaviour
     [SerializeField] Image _skill1CoolTimeImage;
     [SerializeField] TMP_Text _skill1CoolTimeText;
 
+    [Header("스킬 2")]
+    [SerializeField] float _skill2DamageMultiple;
+    [SerializeField] float _skill2Duration;
+    [SerializeField] float _skill2CoolTime;
+
+    bool _canUseSkill2 = true;
+    bool _isSkill2Active = false;
+
+    [SerializeField] Button _skill2Button;
+    [SerializeField] Image _skill2CoolTimeImage;
+    [SerializeField] TMP_Text _skill2CoolTimeText;
+
     public float Skill1DamageMultiple => _skill1DamageMultiple;
+    public float Skill2Duration => _skill2Duration;
 
     public void UseSkill1()
     {
@@ -76,6 +90,71 @@ public class Skill : MonoBehaviour
 
     public void UseSkill2()
     {
-        Debug.Log("스킬 2 사용");
+        if (_canUseSkill2 == false)
+        {
+            Debug.Log("스킬 2 쿨타임 중");
+            return;
+        }
+
+        if (_isSkill2Active == true)
+        {
+            Debug.Log("스킬 2가 이미 적용 중입니다.");
+            return;
+        }
+
+        StartCoroutine(Skill2Routine());
+    }
+
+    IEnumerator Skill2Routine()
+    {
+        _canUseSkill2 = false;
+        _isSkill2Active = true;
+
+        _skill2Button.interactable = false;
+        _skill2CoolTimeImage.gameObject.SetActive(true);
+        _skill2CoolTimeText.gameObject.SetActive(true);
+
+        _hero.SetDamageBuff(_skill2DamageMultiple);
+
+        Debug.Log("스킬 2 사용: 데미지 증가");
+
+        float remainTime = _skill2CoolTime;
+
+        while (remainTime > 0)
+        {
+            _skill2CoolTimeText.text = remainTime.ToString("0");
+
+            remainTime -= Time.deltaTime;
+
+            if (remainTime <= _skill2CoolTime - _skill2Duration && _isSkill2Active == true)
+            {
+                _hero.ResetDamageBuff(_skill2DamageMultiple);
+                _isSkill2Active = false;
+            }
+
+            yield return null;
+        }
+
+        _canUseSkill2 = true;
+        _skill2Button.interactable = true;
+        _skill2CoolTimeImage.gameObject.SetActive(false);
+        _skill2CoolTimeText.gameObject.SetActive(false);
+
+        Debug.Log("스킬 2 쿨타임 종료");
+    }
+
+    public void IncreaseSkill2Duration(float amount)
+    {
+        _skill2Duration += amount;
+    }
+
+    public void SetSkill1Unlocked(bool isUnlocked)
+    {
+        _skill1Button.gameObject.SetActive(isUnlocked);
+    }
+
+    public void SetSkill2Unlocked(bool isUnlocked)
+    {
+        _skill2Button.gameObject.SetActive(isUnlocked);
     }
 }
