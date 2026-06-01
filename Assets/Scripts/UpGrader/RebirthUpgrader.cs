@@ -179,6 +179,7 @@ public class RebirthUpgrader : MonoBehaviour
         _levels[index]++;
 
         _skill.IncreaseSkill2Duration(increaseAmount);
+        _skill.DecreaseSkill2CoolTime(increaseAmount);
 
         UpdateBlessingView();
 

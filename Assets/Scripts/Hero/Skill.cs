@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using TMPro;
 using UnityEngine;
@@ -32,9 +33,18 @@ public class Skill : MonoBehaviour
     [SerializeField] Button _skill2Button;
     [SerializeField] Image _skill2CoolTimeImage;
     [SerializeField] TMP_Text _skill2CoolTimeText;
+    [SerializeField] GameObject _skill2DurationUI;
+    [SerializeField] Image _skill2DurationBar;
 
     public float Skill1DamageMultiple => _skill1DamageMultiple;
     public float Skill2Duration => _skill2Duration;
+    public float Skill2CoolTime => _skill2CoolTime;
+
+    private void Start()
+    {
+        _skill2DurationUI.SetActive(false);
+        _skill2DurationBar.fillAmount = 0f;
+    }
 
     public void UseSkill1()
     {
@@ -114,26 +124,53 @@ public class Skill : MonoBehaviour
         _skill2CoolTimeImage.gameObject.SetActive(true);
         _skill2CoolTimeText.gameObject.SetActive(true);
 
+        _skill2DurationUI.SetActive(true);
+        _skill2DurationBar.fillAmount = 1f;
+
+        _skill2DurationBar.DOKill();
+        _skill2DurationBar.DOFillAmount(0f, _skill2Duration)
+            .SetEase(Ease.Linear);
+
         _hero.SetDamageBuff(_skill2DamageMultiple);
 
         Debug.Log("스킬 2 사용: 데미지 증가");
 
-        float remainTime = _skill2CoolTime;
+        float coolTimeRemainTime = _skill2CoolTime;
+        float durationRemainTime = _skill2Duration;
 
-        while (remainTime > 0)
+        while (coolTimeRemainTime > 0)
         {
-            _skill2CoolTimeText.text = remainTime.ToString("0");
+            _skill2CoolTimeText.text = coolTimeRemainTime.ToString("0");
 
-            remainTime -= Time.deltaTime;
+            coolTimeRemainTime -= Time.deltaTime;
 
-            if (remainTime <= _skill2CoolTime - _skill2Duration && _isSkill2Active == true)
+            if (_isSkill2Active == true)
             {
-                _hero.ResetDamageBuff(_skill2DamageMultiple);
-                _isSkill2Active = false;
+                durationRemainTime -= Time.deltaTime;
+
+                if (durationRemainTime <= 0)
+                {
+                    _hero.ResetDamageBuff(_skill2DamageMultiple);
+                    _isSkill2Active = false;
+
+                    _skill2DurationBar.DOKill();
+                    _skill2DurationBar.fillAmount = 0f;
+                    _skill2DurationUI.SetActive(false);
+                }
             }
 
             yield return null;
         }
+
+        if (_isSkill2Active == true)
+        {
+            _hero.ResetDamageBuff(_skill2DamageMultiple);
+            _isSkill2Active = false;
+        }
+
+        _skill2DurationBar.DOKill();
+        _skill2DurationBar.fillAmount = 0f;
+        _skill2DurationUI.SetActive(false);
 
         _canUseSkill2 = true;
         _skill2Button.interactable = true;
@@ -146,6 +183,11 @@ public class Skill : MonoBehaviour
     public void IncreaseSkill2Duration(float amount)
     {
         _skill2Duration += amount;
+    }
+
+    public void DecreaseSkill2CoolTime(float amount)
+    {
+        _skill2CoolTime = Mathf.Max(10f, _skill2CoolTime - amount);
     }
 
     public void SetSkill1Unlocked(bool isUnlocked)

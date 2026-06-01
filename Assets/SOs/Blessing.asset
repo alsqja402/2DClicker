@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _baseCost: 5
   _costMultiplier: 1
-  _baseIncreaseAmount: 1
-  _increaseAmountMultiplier: 1.1
+  _baseIncreaseAmount: 2
+  _increaseAmountMultiplier: 1
