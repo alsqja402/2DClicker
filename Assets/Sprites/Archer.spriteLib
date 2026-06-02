@@ -55,6 +55,53 @@ MonoBehaviour:
       m_SpriteOverride: {fileID: -3825235277515807119, guid: d56def12218a1b344a6fbe78692cb4e3, type: 3}
     m_FromMain: 0
     m_EntryOverrideCount: 4
+  - m_Name: Jab
+    m_Hash: 488016790
+    m_CategoryList: []
+    m_OverrideEntries:
+    - m_Name: Jab_0
+      m_Hash: 122833386
+      m_Sprite: {fileID: 1137805138824052146, guid: d56def12218a1b344a6fbe78692cb4e3, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 1137805138824052146, guid: d56def12218a1b344a6fbe78692cb4e3, type: 3}
+    - m_Name: Jab_1
+      m_Hash: 810908028
+      m_Sprite: {fileID: -227019496086430530, guid: d56def12218a1b344a6fbe78692cb4e3, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -227019496086430530, guid: d56def12218a1b344a6fbe78692cb4e3, type: 3}
+    - m_Name: Jab_2
+      m_Hash: 693905606
+      m_Sprite: {fileID: -3162778974338740330, guid: d56def12218a1b344a6fbe78692cb4e3, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -3162778974338740330, guid: d56def12218a1b344a6fbe78692cb4e3, type: 3}
+    m_FromMain: 0
+    m_EntryOverrideCount: 3
+  - m_Name: Run
+    m_Hash: 675013152
+    m_CategoryList: []
+    m_OverrideEntries:
+    - m_Name: Run_0
+      m_Hash: 27503621
+      m_Sprite: {fileID: 4944230376442633554, guid: d56def12218a1b344a6fbe78692cb4e3, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 4944230376442633554, guid: d56def12218a1b344a6fbe78692cb4e3, type: 3}
+    - m_Name: Run_1
+      m_Hash: 916757651
+      m_Sprite: {fileID: -2274363484027164459, guid: d56def12218a1b344a6fbe78692cb4e3, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -2274363484027164459, guid: d56def12218a1b344a6fbe78692cb4e3, type: 3}
+    - m_Name: Run_2
+      m_Hash: 799919401
+      m_Sprite: {fileID: 8284087734974297348, guid: d56def12218a1b344a6fbe78692cb4e3, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 8284087734974297348, guid: d56def12218a1b344a6fbe78692cb4e3, type: 3}
+    - m_Name: Run_3
+      m_Hash: 413859263
+      m_Sprite: {fileID: 5304202850863732263, guid: d56def12218a1b344a6fbe78692cb4e3, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 5304202850863732263, guid: d56def12218a1b344a6fbe78692cb4e3, type: 3}
+    m_FromMain: 0
+    m_EntryOverrideCount: 4
   m_PrimaryLibraryGUID: 
-  m_ModificationHash: 639140949678014118
+  m_ModificationHash: 639159916169360104
   m_Version: 1

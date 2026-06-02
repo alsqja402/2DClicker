@@ -15,6 +15,7 @@ public class Session : MonoBehaviour
     [SerializeField] View _view;
     [SerializeField] UpgraderView _upgraderView;
     [SerializeField] EnemyView _enemyView;
+    [SerializeField] BackGroundCtlr _backGroundCtlr;
 
     [Header("적")]
     [SerializeField] Enemy _enemy;
@@ -57,6 +58,7 @@ public class Session : MonoBehaviour
     {
         _stageCount = 1;
         _view.UpdateStageText(_stageCount);
+        _backGroundCtlr.ChangeBackGround(_stageCount);
 
         _killCount = 0;
         _enemyCount = 3;
@@ -105,6 +107,7 @@ public class Session : MonoBehaviour
 
         _stageCount = 1;
         _view.UpdateStageText(_stageCount);
+        _backGroundCtlr.ChangeBackGround(_stageCount);
 
         _killCount = 0;
         _enemyCount = 3;
@@ -146,6 +149,7 @@ public class Session : MonoBehaviour
         _enemyCount = 3;
         AddGold(rewardGold);
         _view.UpdateStageText(_stageCount);
+        _backGroundCtlr.ChangeBackGround(_stageCount);
         _view.UpdateKillText(_killCount, _enemyCount);
         _bossIn = false;
         SpawnEnemy();
@@ -207,6 +211,7 @@ public class Session : MonoBehaviour
                 _stageCount++;
                 _killCount = 0;
                 _view.UpdateStageText(_stageCount);
+                _backGroundCtlr.ChangeBackGround(_stageCount);
             }
         }
     }
