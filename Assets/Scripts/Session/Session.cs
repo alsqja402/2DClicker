@@ -1,7 +1,9 @@
 using DG.Tweening;
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using static BackGroundCtlr;
 
 public class Session : MonoBehaviour
 {
@@ -16,6 +18,7 @@ public class Session : MonoBehaviour
     [SerializeField] UpgraderView _upgraderView;
     [SerializeField] EnemyView _enemyView;
     [SerializeField] BackGroundCtlr _backGroundCtlr;
+    [SerializeField] StageTransitionView _stageTransitionView;
 
     [Header("적")]
     [SerializeField] Enemy _enemy;
@@ -50,6 +53,7 @@ public class Session : MonoBehaviour
     float _rebrithPoint;
 
     bool _bossIn = false;
+    bool _isChangingStage = false;
 
     public float Gold => _gold;
     public int StageCount => _stageCount;
@@ -143,16 +147,47 @@ public class Session : MonoBehaviour
     }
     public void BossDead(float rewardGold)
     {
+        StartCoroutine(BossDeadRoutine(rewardGold));
+    }
+
+    private IEnumerator BossDeadRoutine(float rewardGold)
+    {
+        _isChangingStage = true;
+
+        AddGold(rewardGold);
+
+        int nextStage = _stageCount + 1;
+        bool showTransition = _backGroundCtlr.HasNextTransition(nextStage);
+
+        if (showTransition)
+        {
+            string nextBackGroundName = _backGroundCtlr.GetBackGroundName(nextStage);
+            TransitionImageData nextImageData = _backGroundCtlr.GetTransitionImageData(nextStage);
+
+            yield return StartCoroutine(
+                _stageTransitionView.Show(nextBackGroundName, nextImageData)
+            );
+        }
+
         _boss = null;
         _stageCount++;
         _killCount = 0;
         _enemyCount = 3;
-        AddGold(rewardGold);
+
         _view.UpdateStageText(_stageCount);
         _backGroundCtlr.ChangeBackGround(_stageCount);
         _view.UpdateKillText(_killCount, _enemyCount);
+
         _bossIn = false;
+
         SpawnEnemy();
+
+        if (showTransition)
+        {
+            yield return StartCoroutine(_stageTransitionView.Hide());
+        }
+
+        _isChangingStage = false;
     }
 
     public void SpawnEnemy()
@@ -187,9 +222,12 @@ public class Session : MonoBehaviour
 
     public void TapAttack()
     {
+        if (_isChangingStage)
+            return;
+
         if (_enemy != null)
             _hero.Attack(_enemy);
-        else
+        else if (_boss != null)
             _hero.BossAttack(_boss);
     }
 
@@ -201,7 +239,7 @@ public class Session : MonoBehaviour
         if(_killCount >= _enemyCount)
         {
             // 보스가 출현하는 조건을 만족하면 보스 스폰
-            if (_stageCount % 3 == 0)
+            if (_stageCount % 5 == 0)
             {
                 _killCount = 0;
                 _bossIn = true;
@@ -253,5 +291,25 @@ public class Session : MonoBehaviour
             return true;
         }
         return false;
+    }
+
+    public IEnumerator PlayWithIntroTransition()
+    {
+        _isChangingStage = true;
+
+        int firstStage = 1;
+
+        string firstBackGroundName = _backGroundCtlr.GetBackGroundName(firstStage);
+        TransitionImageData firstImageData = _backGroundCtlr.GetTransitionImageData(firstStage);
+
+        yield return StartCoroutine(
+            _stageTransitionView.Show(firstBackGroundName, firstImageData)
+        );
+
+        Play();
+
+        yield return StartCoroutine(_stageTransitionView.Hide());
+
+        _isChangingStage = false;
     }
 }

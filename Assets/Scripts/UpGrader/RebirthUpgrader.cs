@@ -6,6 +6,7 @@ public class RebirthUpgrader : MonoBehaviour
     [SerializeField] Skill _skill;
     [SerializeField] SkillUpgraderView _smiteUpgraderView;
     [SerializeField] SkillUpgraderView _blessingUpgraderView;
+    [SerializeField] SkillUnlockView _skillUnlockView;
 
     [SerializeField] UpgradeData[] _datas;
     [SerializeField] RebirthUpgraderView[] _rebirthViews;
@@ -99,6 +100,7 @@ public class RebirthUpgrader : MonoBehaviour
 
         // UpdateView()가 메뉴 아이콘 전환까지 같이 처리함.
         //_skillUpgraderView.SetUnlocked(true);
+        _skillUnlockView.OpenSmitePanel();
         _skill.SetSkill1Unlocked(true);
         UpdateSmiteView();
 
@@ -157,6 +159,7 @@ public class RebirthUpgrader : MonoBehaviour
 
         _levels[index]++;
 
+        _skillUnlockView.OpenBlessingPanel();
         _skill.SetSkill2Unlocked(true);
         UpdateBlessingView();
 

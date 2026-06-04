@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 public class PlayScene : MonoBehaviour
 {
@@ -7,8 +8,7 @@ public class PlayScene : MonoBehaviour
 
     private void Start()
     {
-        _session.Play();
-
+        StartCoroutine(_session.PlayWithIntroTransition());
     }
 
     public void Tap()
