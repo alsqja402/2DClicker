@@ -1,5 +1,6 @@
 using DG.Tweening;
 using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -32,12 +33,21 @@ public class Session : MonoBehaviour
     [SerializeField] Boss _boss;
     [SerializeField] Boss[] _bossPrefabs;
     [SerializeField] Transform _bossParent;
+    [SerializeField] float _bossLimitTime = 30f;
+
+    float _bossRemainTime;
+    Coroutine _bossTimerCoroutine;
+    bool _isBossBattleActive;
 
     [Header("이펙트")]
     [SerializeField] DamageSpawner _damageSpawner;
     [SerializeField] GoldSpawner _goldSpawner;
     [SerializeField] Particle _particle;
     [SerializeField] Rebirth _rebirth;
+
+    [Header("장비")]
+    [SerializeField] EquipmentDropTable _equipmentDropTable;
+    [SerializeField] float _equipmentRewardChance = 30f;
 
     public Enemy CurrentEnemy => _enemy;
     public Boss CurrentBoss => _boss;
@@ -78,17 +88,21 @@ public class Session : MonoBehaviour
 
         _upgraderView.UpdateView(_level, _sum, _cost, _upgradeAmount);
 
+        _view.HideBossTime();
     }
 
     public void TestRebirth()
     {
         _rebirth.RebirthEffect(() =>
         {
-            Debug.Log("실제 환생 처리");
+            Debug.Log("리버스 효과 완료");
         });
     }
     public void Rebirth()
     {
+        _isBossBattleActive = false;
+        StopBossTimer();
+
         float rewardRebirthPoint = _rebirthData.GetRebirthPointByStage(_stageCount);
 
         AddRebrithPoint(rewardRebirthPoint);
@@ -123,7 +137,7 @@ public class Session : MonoBehaviour
         SpawnEnemy();
     }
 
-    public void EnemyDead(float rewardGold)
+    public void EnemyDead(float rewardGold, Vector3 deadPosition)
     {
 
         AddKillCount();
@@ -132,7 +146,7 @@ public class Session : MonoBehaviour
 
         _view.UpdateKillText(_killCount, _enemyCount);
 
-        _goldSpawner.GoldSpawnerView(_enemy.transform.position);
+        _goldSpawner.GoldSpawnerView(deadPosition);
 
         _enemy = null;
 
@@ -145,8 +159,15 @@ public class Session : MonoBehaviour
             SpawnEnemy();
         }
     }
+
     public void BossDead(float rewardGold)
     {
+        if (_isBossBattleActive == false)
+            return;
+
+        _isBossBattleActive = false;
+        StopBossTimer();
+
         StartCoroutine(BossDeadRoutine(rewardGold));
     }
 
@@ -155,6 +176,30 @@ public class Session : MonoBehaviour
         _isChangingStage = true;
 
         AddGold(rewardGold);
+
+        float randomValue = Random.Range(0f, 100f);
+
+        if (randomValue <= _equipmentRewardChance)
+        {
+            List<EquipmentData> selectedEquipments = _equipmentDropTable.GetRandomEquipmentsByStage(3, _stageCount);
+
+            for (int i = 0; i < selectedEquipments.Count; i++)
+            {
+                EquipmentData equipment = selectedEquipments[i];
+
+                Debug.Log(
+                    $"보스 장비 보상: {equipment.EquipmentName}, " +
+                    $"등급: {equipment.Grade}, " +
+                    $"종류: {equipment.Type}, " +
+                    $"능력치: {equipment.StatType}, " +
+                    $"수치: {equipment.StatValue}"
+                );
+            }
+        }
+        else
+        {
+            Debug.Log("이번 보스는 장비 보상이 나오지 않았습니다.");
+        }
 
         int nextStage = _stageCount + 1;
         bool showTransition = _backGroundCtlr.HasNextTransition(nextStage);
@@ -197,7 +242,7 @@ public class Session : MonoBehaviour
 
         _enemy = Instantiate(enemyprefab, _enemyParent);
 
-        // 이거때매 적 스폰이 됐음 
+        // ?닿굅?뚮ℓ ???ㅽ룿???먯쓬 
         float maxHp = _data.GetHpByStage(_stageCount);
         float rewardGold = _data.GetGoldByStage(_stageCount);
         _enemy.Initialize(_enemyView, this, maxHp, rewardGold, _damageSpawner);
@@ -218,6 +263,76 @@ public class Session : MonoBehaviour
         float maxHp = _data.GetHpByStage(_stageCount) * 3;
         float rewardGold = _data.GetGoldByStage(_stageCount) * 3;
         _boss.Initialize(_enemyView, this, maxHp, rewardGold, _damageSpawner);
+
+        StartBossTimer();
+    }
+
+    public void StartBossTimer()
+    {
+        StopBossTimer();
+
+        _bossRemainTime = _bossLimitTime;
+        _isBossBattleActive = true;
+
+        _view.ShowBossTime();
+        _view.UpdateBossTime(_bossRemainTime);
+        _view.StartBossTimeView(_bossLimitTime);    
+
+        _bossTimerCoroutine = StartCoroutine(BossTimerRoutine());
+    }
+
+    IEnumerator BossTimerRoutine()
+    {
+        while (_bossRemainTime > 0f)
+        {
+            _bossRemainTime -= Time.deltaTime;
+
+            if (_bossRemainTime < 0f)
+                _bossRemainTime = 0f;
+
+            _view.UpdateBossTime(_bossRemainTime);
+
+            yield return null;
+        }
+
+        BossTimeOver();
+    }
+
+    void StopBossTimer()
+    {
+        if (_bossTimerCoroutine != null)
+        {
+            StopCoroutine(_bossTimerCoroutine);
+            _bossTimerCoroutine = null;
+        }
+
+        _view.HideBossTime();
+        _view.StopBossTimeView();
+    }
+
+    void BossTimeOver()
+    {
+        if (_isBossBattleActive == false)
+            return;
+
+        _isBossBattleActive = false;
+        StopBossTimer();
+
+        if (_boss != null)
+        {
+            _boss.DestroyBoss();
+            _boss = null;
+        }
+
+        _bossIn = false;
+
+        _killCount = 0;
+        _enemyCount = 3;
+
+        _view.UpdateStageText(_stageCount);
+        _view.UpdateKillText(_killCount, _enemyCount);
+
+        SpawnEnemy();
     }
 
     public void TapAttack()
@@ -231,14 +346,12 @@ public class Session : MonoBehaviour
             _hero.BossAttack(_boss);
     }
 
-    // 킬 수 증가 및 스테이지 증가
     public void AddKillCount()
     {
         _killCount++;
 
         if(_killCount >= _enemyCount)
         {
-            // 보스가 출현하는 조건을 만족하면 보스 스폰
             if (_stageCount % 5 == 0)
             {
                 _killCount = 0;
@@ -261,7 +374,6 @@ public class Session : MonoBehaviour
         _view.UpdateGoldText(prevGold, _gold);
     }
 
-    // 돈 지불하는거
     public bool TryPayGold(float amount)
     {
         if (_gold >= amount)
@@ -313,3 +425,4 @@ public class Session : MonoBehaviour
         _isChangingStage = false;
     }
 }
+

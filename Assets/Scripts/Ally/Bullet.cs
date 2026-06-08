@@ -1,6 +1,6 @@
-using UnityEngine;
+Ôªøusing UnityEngine;
 
-// ∫“∑ø¿∏∑Œ ∞Ìƒ°±‚ 
+// Î∂àÎ†õÏúºÎ°ú Í≥†ÏπòÍ∏∞ 
 public class Bullet : MonoBehaviour
 {
     [SerializeField] Session _session;
@@ -10,6 +10,9 @@ public class Bullet : MonoBehaviour
 
     ParticleSystem _hitParticle;
 
+    Enemy _targetEnemy;
+    Boss _targetBoss;
+    Transform _targetHitPoint;
     Vector3 _targetPos;
     Vector3 _dir;
 
@@ -19,15 +22,25 @@ public class Bullet : MonoBehaviour
         _speed = speed;
         _damage = damage;
         _hitParticle = hitParticle;
-        if(_session.CurrentEnemy != null)
+
+        _targetEnemy = _session.CurrentEnemy;
+        _targetBoss = _session.CurrentBoss;
+
+        if(_targetEnemy != null && _targetEnemy.HitPoint != null)
         {
-            _targetPos = _session.CurrentEnemy.HitPoint.position;
+            _targetHitPoint = _targetEnemy.HitPoint;
         }
-        else 
+        else if (_targetBoss != null && _targetBoss.HitPoint != null)
         {
-            _targetPos = _session.CurrentBoss.HitPoint.position;
+            _targetHitPoint = _targetBoss.HitPoint;
+        }
+        else
+        {
+            Destroy(gameObject);
+            return;
         }
 
+        _targetPos = _targetHitPoint.position;
         _dir = (_targetPos - transform.position).normalized;
 
         transform.right = _dir;
@@ -36,20 +49,21 @@ public class Bullet : MonoBehaviour
     private void Update()
     {
         float distance = Vector3.Distance(_targetPos, transform.position);
-        // ∆ƒ∆º≈¨
+        // ÌååÌã∞ÌÅ¥
 
         if (distance < 0.1f)
         {
-            if (_session.CurrentEnemy != null)
+            if (_targetEnemy != null)
             {
                 Instantiate(_hitParticle, transform.position, Quaternion.identity);
-                _session.CurrentEnemy.TakeHit(_damage);
+                _targetEnemy.TakeHit(_damage);
             }
-            else 
+            else if (_targetBoss != null)
             {
                 Instantiate(_hitParticle, transform.position, Quaternion.identity);
-                _session.CurrentBoss.TakeHit(_damage);
+                _targetBoss.TakeHit(_damage);
             }
+
             Destroy(gameObject);
         }
         else

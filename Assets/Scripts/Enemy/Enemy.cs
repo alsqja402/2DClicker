@@ -19,6 +19,8 @@ public class Enemy : MonoBehaviour
     Session _session;
 
     DamageSpawner _damageSpawner;
+    bool _isDead;
+
     public Transform HitPoint => _hitPoint;
     
     public void Initialize(EnemyView view, Session session, float maxHp, float rewardGold, DamageSpawner damageSpawner)
@@ -26,6 +28,7 @@ public class Enemy : MonoBehaviour
         _view = view;   
         _session = session;
         _damageSpawner = damageSpawner; 
+        _isDead = false;
         _model.Initialize(maxHp, rewardGold);
 
         _view.UpdateHp(_model.CurrentHp, _model.MaxHp);
@@ -34,6 +37,9 @@ public class Enemy : MonoBehaviour
 
     public void TakeHit(float damage, bool isCritical = false)
     {
+        if (_isDead)
+            return;
+
         _model.TakeDamage(damage);
 
         _damageSpawner.SpawnDamageView(_damageViewPoint.position, damage, isCritical);
@@ -54,7 +60,14 @@ public class Enemy : MonoBehaviour
 
     void Die()
     {
-        _session.EnemyDead(_model.RewardGold);
+        if (_isDead)
+            return;
+
+        _isDead = true;
+
+        Vector3 deadPosition = transform.position;
+
+        _session.EnemyDead(_model.RewardGold, deadPosition);
 
         DeathParticle(_deathParticlePoint.position);
 

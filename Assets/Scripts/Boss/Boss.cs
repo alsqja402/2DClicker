@@ -1,9 +1,9 @@
+ï»¿using DG.Tweening;
 using UnityEngine;
-using DG.Tweening;
 
 public class Boss : MonoBehaviour
 {
-    [Header("ÄÄÆ÷³ÍÆ®")]
+    [Header("ì»´í¬ë„ŒíŠ¸")]
     [SerializeField] EnemyModel _model;
     [SerializeField] EnemyView _view;
     [SerializeField] Transform _damageViewPoint;
@@ -18,6 +18,8 @@ public class Boss : MonoBehaviour
     Session _session;
 
     DamageSpawner _damageSpawner;
+    bool _isDead;
+
     public Transform HitPoint => _hitPoint;
 
     public void Initialize(EnemyView view, Session session, float maxHp, float rewardGold, DamageSpawner damageSpawner)
@@ -25,6 +27,7 @@ public class Boss : MonoBehaviour
         _view = view;
         _session = session;
         _damageSpawner = damageSpawner;
+        _isDead = false;
         _model.Initialize(maxHp, rewardGold);
 
         _view.UpdateHp(_model.CurrentHp, _model.MaxHp);
@@ -33,6 +36,9 @@ public class Boss : MonoBehaviour
 
     public void TakeHit(float damage, bool isCritical = false)
     {
+        if (_isDead)
+            return;
+
         _model.TakeDamage(damage);
 
         _damageSpawner.SpawnDamageView(_damageViewPoint.position, damage, isCritical);
@@ -46,7 +52,7 @@ public class Boss : MonoBehaviour
     }
     public void DeathParticle(Vector3 pos)
     {
-        // ÆÄÆ¼Å¬ ¾ø¾Ö´Â ÀÛ¾÷ ÇØ¾ßÇÔ
+        // íŒŒí‹°í´ ì—†ì• ëŠ” ì‘ì—… í•´ì•¼í•¨
         Instantiate(_deathParticle,
             pos,
             Quaternion.identity);
@@ -54,6 +60,11 @@ public class Boss : MonoBehaviour
 
     void Die()
     {
+        if (_isDead)
+            return;
+
+        _isDead = true;
+
         _session.BossDead(_model.RewardGold);
 
         DeathParticle(_deathParticlePoint.position);

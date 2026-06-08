@@ -1,7 +1,7 @@
 ﻿using TMPro;
 using DG.Tweening;
-using UnityEditor.ShaderKeywordFilter;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class View : MonoBehaviour
 {
@@ -12,6 +12,11 @@ public class View : MonoBehaviour
 
     [SerializeField] TMP_Text _goldText;
     [SerializeField] TMP_Text _rebrithPointText;
+
+    [SerializeField] GameObject _bossTimeBackGround;
+    [SerializeField] Image _bossTime;
+    [SerializeField] TMP_Text _bossTimeText;
+    Tween _bossTimeTween;
 
     public void UpdateStageText(int stageCount)
     {
@@ -59,6 +64,41 @@ public class View : MonoBehaviour
     public void UpdateRebrithPointText(float prevRebirthPoint, float RebrithPoint)
     {
         DOVirtual.Float(prevRebirthPoint, RebrithPoint, 0.8f, value => _rebrithPointText.text = value.ToClickerString("{0:N0}"));
+    }
+
+    public void ShowBossTime()
+    {
+        _bossTimeBackGround.SetActive(true);
+    }
+
+    public void HideBossTime()
+    {
+        _bossTimeBackGround.SetActive(false);
+    }
+
+    public void UpdateBossTime(float remainTime)
+    {
+        _bossTimeText.text = $"{remainTime:0.0}s";
+    }
+
+    public void StartBossTimeView(float limitTime)
+    {
+        _bossTime.gameObject.SetActive(true);
+        _bossTime.fillAmount = 1f;
+
+        _bossTimeTween?.Kill();
+
+        _bossTimeTween = _bossTime
+            .DOFillAmount(0f, limitTime)
+            .SetEase(Ease.Linear);
+    }
+
+    public void StopBossTimeView()
+    {
+        _bossTimeTween?.Kill();
+        _bossTimeTween = null;
+
+        _bossTime.gameObject.SetActive(false);
     }
 }
 

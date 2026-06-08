@@ -1,4 +1,4 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 
 public class Thief : MonoBehaviour
 {
@@ -40,23 +40,31 @@ public class Thief : MonoBehaviour
 
     public void ThiefAttack()
     {
-        Vector3 hitpos;
-        if(_session.CurrentEnemy != null)
+        Enemy targetEnemy = _session.CurrentEnemy;
+        Boss targetBoss = _session.CurrentBoss;
+        Transform hitPoint = null;
+
+        if(targetEnemy != null && targetEnemy.HitPoint != null)
         {
-            hitpos = _session.CurrentEnemy.HitPoint.position;
-            _session.CurrentEnemy.TakeHit(_damage);
+            hitPoint = targetEnemy.HitPoint;
+            targetEnemy.TakeHit(_damage);
+        }
+        else if (targetBoss != null && targetBoss.HitPoint != null)
+        {
+            hitPoint = targetBoss.HitPoint;
+            targetBoss.TakeHit(_damage);  
         }
         else
         {
-            hitpos = _session.CurrentBoss.HitPoint.position;
-            _session.CurrentBoss.TakeHit(_damage);  
+            return;
         }
-        Instantiate(_attackParticle, hitpos, Quaternion.identity);
+
+        Instantiate(_attackParticle, hitPoint.position, Quaternion.identity);
     }
 
     public void UpgradeThief(float amount)
     {
         _damage += amount;
-        Debug.Log("½ÃÇÁ ¾÷±×·¹ÀÌµå");
+        Debug.Log("ì‹œí”„ ì—…ê·¸ë ˆì´ë“œ");
     }
 }
