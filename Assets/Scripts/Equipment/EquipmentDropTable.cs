@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+ï»¿using System.Collections.Generic;
 using UnityEngine;
 
 public class EquipmentDropTable : MonoBehaviour
@@ -8,7 +8,7 @@ public class EquipmentDropTable : MonoBehaviour
     public List<EquipmentData> GetRandomEquipments(int count)
     {
         List<EquipmentData> result = new List<EquipmentData>();
-        List<EquipmentData> candidates = new List<EquipmentData>(_equipments); // _equipment¸¦ ¹Ù·Î »ç¿ëÇÏÁö ¾Ê°í, º¹»çÇÏ¿© »ç¿ë(RemoveAtÀ» »ç¿ëÇÏ±â À§ÇØ)
+        List<EquipmentData> candidates = new List<EquipmentData>(_equipments); // _equipmentë¥¼ ë°”ë¡œ ì‚¬ìš©í•˜ì§€ ì•Šê³ , ë³µì‚¬í•˜ì—¬ ì‚¬ìš©(RemoveAtì„ ì‚¬ìš©í•˜ê¸° ìœ„í•´)
 
         for (int i = 0; i < count; i++)
         {
@@ -29,37 +29,37 @@ public class EquipmentDropTable : MonoBehaviour
 
     public List<EquipmentData> GetRandomEquipmentsByStage(int count, int stage)
     {
-        // ÀÌ¹ø¿¡ »ÌÀ» ¼ö ÀÖ´Â ÈÄº¸ Àåºñ ¸ñ·Ï
+        // ì´ë²ˆì— ë½‘ì„ ìˆ˜ ìˆëŠ” í›„ë³´ ì¥ë¹„ ëª©ë¡
         List<EquipmentData> candidates = new List<EquipmentData>();
 
         for (int i = 0; i < _equipments.Count; i++)
         {
             EquipmentData equipment = _equipments[i];
 
-            // ÀÌ Àåºñ°¡ Áö±İ ½ºÅ×ÀÌÁö¿¡¼­ ³ª¿Íµµ µÇ´Â°¡?
+            // ì´ ì¥ë¹„ê°€ ì§€ê¸ˆ ìŠ¤í…Œì´ì§€ì—ì„œ ë‚˜ì™€ë„ ë˜ëŠ”ê°€?
             if (CanDropByStage(equipment.Grade, stage))
             {
                 candidates.Add(equipment);
             }
         }
         
-        // »ÌÈù ÈÄº¸ Àåºñµé
+        // ë½‘íŒ í›„ë³´ ì¥ë¹„ë“¤
         List<EquipmentData> result = new List<EquipmentData>();
 
-        // ÈÄº¸ Àåºñµé Áß¿¡¼­ ·£´ıÀ¸·Î count°³ »Ì±â
+        // í›„ë³´ ì¥ë¹„ë“¤ ì¤‘ì—ì„œ ëœë¤ìœ¼ë¡œ countê°œ ë½‘ê¸°
         for (int i = 0; i < count; i++)
         {
-            // ÈÄº¸ Àåºñ°¡ ¾øÀ¸¸é »Ì±â ¸ØÃã (°¹¼ö°¡ ºÎÁ·ÇÒ ¶§)
+            // í›„ë³´ ì¥ë¹„ê°€ ì—†ìœ¼ë©´ ë½‘ê¸° ë©ˆì¶¤ (ê°¯ìˆ˜ê°€ ë¶€ì¡±í•  ë•Œ)
             if (candidates.Count <= 0)
             {
                 break;
             }
 
-            // ÈÄº¸ Àåºñµé Áß¿¡¼­ ·£´ı ¹øÈ£ »Ì±â
+            // í›„ë³´ ì¥ë¹„ë“¤ ì¤‘ì—ì„œ ëœë¤ ë²ˆí˜¸ ë½‘ê¸°
             int randomIndex = Random.Range(0, candidates.Count);
             EquipmentData selectedEquipment = candidates[randomIndex];
 
-            // »ÌÈù ÈÄº¸ Àåºñ´Â ¼±ÅÃ Àåºñ¿¡ Ãß°¡ÇÏ°í, ÈÄº¸ ¸ñ·Ï¿¡¼­´Â Á¦°ÅÇÏ±â (Áßº¹ ¹æÁö)
+            // ë½‘íŒ í›„ë³´ ì¥ë¹„ëŠ” ì„ íƒ ì¥ë¹„ì— ì¶”ê°€í•˜ê³ , í›„ë³´ ëª©ë¡ì—ì„œëŠ” ì œê±°í•˜ê¸° (ì¤‘ë³µ ë°©ì§€)
             result.Add(selectedEquipment);
             candidates.RemoveAt(randomIndex);
         }
@@ -67,7 +67,7 @@ public class EquipmentDropTable : MonoBehaviour
         return result;
     }
 
-    // µî±Ş Á¦ÇÑ
+    // ë“±ê¸‰ ì œí•œ
     bool CanDropByStage(EquipmentGrade grade, int stage)
     {
         if (stage < 10)
@@ -88,6 +88,6 @@ public class EquipmentDropTable : MonoBehaviour
                grade == EquipmentGrade.Legendary;
     }
 
-    // ¸ñÇ¥: ÀÎº¥Åä¸®Ã¢À» ¸¸µé°í »ÌÈù Àåºñ´Â ÀÎº¥Åä¸®¿¡ ÀúÀå. Àåºñ¸¦ ÀåÂøÇÒ ¼ö ÀÖ°í, ÀåÂøÇÏ¸é ÇÃ·¹ÀÌ¾îÀÇ ´É·ÂÄ¡°¡ ¿Ã¶ó°¡´Â ±â´É ¸¸µé±â
-    // ³ôÀº µî±ŞÀÇ Àåºñ¸¦ ÀåÂøÇÏ°í ³²Àº ³·Àº ÀåºñµéÀº, ÆÇ¸ÅÇÏ°Å³ª °°Àº µî±ŞÀÇ Àåºñ¿Í ÇÕ¼ºÇØ¼­ ´õ ³ôÀº µî±ŞÀÇ Àåºñ·Î ¸¸µé ¼ö ÀÖ°Ô ¸¸µé±â
+    // ëª©í‘œ: ì¸ë²¤í† ë¦¬ì°½ì„ ë§Œë“¤ê³  ë½‘íŒ ì¥ë¹„ëŠ” ì¸ë²¤í† ë¦¬ì— ì €ì¥. ì¥ë¹„ë¥¼ ì¥ì°©í•  ìˆ˜ ìˆê³ , ì¥ì°©í•˜ë©´ í”Œë ˆì´ì–´ì˜ ëŠ¥ë ¥ì¹˜ê°€ ì˜¬ë¼ê°€ëŠ” ê¸°ëŠ¥ ë§Œë“¤ê¸°
+    // ë†’ì€ ë“±ê¸‰ì˜ ì¥ë¹„ë¥¼ ì¥ì°©í•˜ê³  ë‚¨ì€ ë‚®ì€ ì¥ë¹„ë“¤ì€, íŒë§¤í•˜ê±°ë‚˜ ê°™ì€ ë“±ê¸‰ì˜ ì¥ë¹„ì™€ í•©ì„±í•´ì„œ ë” ë†’ì€ ë“±ê¸‰ì˜ ì¥ë¹„ë¡œ ë§Œë“¤ ìˆ˜ ìˆê²Œ ë§Œë“¤ê¸°
 }
