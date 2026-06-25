@@ -48,6 +48,8 @@ public class Session : MonoBehaviour
     [Header("장비")]
     [SerializeField] EquipmentDropTable _equipmentDropTable;
     [SerializeField] float _equipmentRewardChance = 30f;
+    [SerializeField] EquipmentRewardView _equipmentRewardView;
+    [SerializeField] EquipmentManager _equipmentManager;
 
     public Enemy CurrentEnemy => _enemy;
     public Boss CurrentBoss => _boss;
@@ -142,7 +144,7 @@ public class Session : MonoBehaviour
 
         AddKillCount();
 
-        AddGold(rewardGold);
+        AddGold(rewardGold * GetGoldWithEquipmentBonus());
 
         _view.UpdateKillText(_killCount, _enemyCount);
 
@@ -175,7 +177,7 @@ public class Session : MonoBehaviour
     {
         _isChangingStage = true;
 
-        AddGold(rewardGold);
+        AddGold(rewardGold * GetGoldWithEquipmentBonus());
 
         float randomValue = Random.Range(0f, 100f);
 
@@ -183,18 +185,16 @@ public class Session : MonoBehaviour
         {
             List<EquipmentData> selectedEquipments = _equipmentDropTable.GetRandomEquipmentsByStage(3, _stageCount);
 
-            for (int i = 0; i < selectedEquipments.Count; i++)
-            {
-                EquipmentData equipment = selectedEquipments[i];
+            _equipmentRewardView.Show(selectedEquipments);
 
-                Debug.Log(
-                    $"보스 장비 보상: {equipment.EquipmentName}, " +
-                    $"등급: {equipment.Grade}, " +
-                    $"종류: {equipment.Type}, " +
-                    $"능력치: {equipment.StatType}, " +
-                    $"수치: {equipment.StatValue}"
-                );
-            }
+            yield return new WaitUntil(
+                () => _equipmentRewardView.IsSelecting == false
+            );
+
+            EquipmentData selectedEquipment =
+                _equipmentRewardView.SelectedEquipment;
+
+            _equipmentManager.Equip(selectedEquipment);
         }
         else
         {
@@ -242,7 +242,6 @@ public class Session : MonoBehaviour
 
         _enemy = Instantiate(enemyprefab, _enemyParent);
 
-        // ?닿굅?뚮ℓ ???ㅽ룿???먯쓬 
         float maxHp = _data.GetHpByStage(_stageCount);
         float rewardGold = _data.GetGoldByStage(_stageCount);
         _enemy.Initialize(_enemyView, this, maxHp, rewardGold, _damageSpawner);
@@ -372,6 +371,11 @@ public class Session : MonoBehaviour
         float prevGold = _gold;
         _gold += amount;
         _view.UpdateGoldText(prevGold, _gold);
+    }
+    float GetGoldWithEquipmentBonus()
+    {
+        float bonusPercent = _equipmentManager.GoldGainBonusPercent;
+        return (1f + bonusPercent / 100f);
     }
 
     public bool TryPayGold(float amount)

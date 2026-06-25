@@ -19,6 +19,8 @@ public class Hero : MonoBehaviour
     [SerializeField] float _baseCriMultiple = 1.5f;
     [SerializeField] float _baseCriPercent = 0.05f;
 
+    [SerializeField] EquipmentManager _equipmentManager;
+
     public float _playerDamage;
     public float _criMultiple;
     public float _criPercent;
@@ -29,8 +31,9 @@ public class Hero : MonoBehaviour
     }
 
     public void Attack(Enemy enemy)
-    {   
-        float finalDamage = _playerDamage * _criMultiple;
+    {
+        float damage = GetDamageWithEquipmentBonus();
+        float finalDamage = damage * _criMultiple;
         Vector3 hitpos;
 
         if (Random.value < _criPercent)
@@ -44,7 +47,7 @@ public class Hero : MonoBehaviour
         {
             hitpos = _session.CurrentEnemy.HitPoint.position;
             Instantiate(_attackParticle, hitpos, Quaternion.identity);
-            enemy.TakeHit(_playerDamage);
+            enemy.TakeHit(damage);
         }
 
         _renderer.Attack();
@@ -54,7 +57,8 @@ public class Hero : MonoBehaviour
 
     public void BossAttack(Boss boss)
     {
-        float finalDamage = _playerDamage * _criMultiple;
+        float damage = GetDamageWithEquipmentBonus();
+        float finalDamage = damage * _criMultiple;
         Vector3 hitpos;
 
         if (Random.value < _criPercent)
@@ -68,7 +72,7 @@ public class Hero : MonoBehaviour
         {
             hitpos = _session.CurrentBoss.HitPoint.position;
             Instantiate(_attackParticle, hitpos, Quaternion.identity);
-            boss.TakeHit(_playerDamage);
+            boss.TakeHit(damage);
         }
 
         _renderer.Attack();
@@ -138,5 +142,15 @@ public class Hero : MonoBehaviour
     public void ResetDamageBuff(float multiple)
     {
         _playerDamage /= multiple;
+    }
+
+    /// <summary>
+    /// 장비 공격력 증가 함수
+    /// </summary>
+    /// <returns></returns>
+    float GetDamageWithEquipmentBonus()
+    {
+        float bonusPercent = _equipmentManager.DamageBonusPercent;
+        return _playerDamage * (1f + bonusPercent / 100f);
     }
 }

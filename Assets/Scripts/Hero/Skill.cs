@@ -22,6 +22,12 @@ public class Skill : MonoBehaviour
     [SerializeField] Image _skill1CoolTimeImage;
     [SerializeField] TMP_Text _skill1CoolTimeText;
 
+    [Header("스킬 1 화면 흔들림")]
+    [SerializeField] Transform _cameraTransform;
+    [SerializeField] float _shakeDuration;
+    [SerializeField] float _shakePower;
+    [SerializeField] int _shakeVibrato;
+
     [Header("스킬 2")]
     [SerializeField] float _skill2DamageMultiple;
     [SerializeField] float _skill2Duration;
@@ -64,6 +70,8 @@ public class Skill : MonoBehaviour
 
         Instantiate(_skill1Particle, _skill1ParticlePoint.position, Quaternion.identity);
 
+        ShakeCamera();
+
         if (_session.CurrentEnemy != null)
         {
             _hero.SkillAttack(_session.CurrentEnemy, skillDamage);
@@ -75,6 +83,21 @@ public class Skill : MonoBehaviour
 
         StartCoroutine(Skill1CoolTimeRoutine());
     }
+
+    void ShakeCamera()
+    {
+        if (_cameraTransform == null)
+        {
+            return;
+        }
+
+        _cameraTransform.DOKill();
+
+        _cameraTransform
+            .DOShakePosition(_shakeDuration, _shakePower, _shakeVibrato)
+            .SetEase(Ease.OutQuad);
+    }
+
     IEnumerator Skill1CoolTimeRoutine()
     {
         float remainTime = _skill1CoolTime;

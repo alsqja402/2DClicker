@@ -28,10 +28,12 @@ public class EquipmentData : ScriptableObject
     [SerializeField] EquipmentType _type;
     [SerializeField] EquipmentStatType _statType;
     [SerializeField] float _statValue;
+    [SerializeField] Sprite _icon;
 
     public string EquipmentName => _equipmentName;
     public EquipmentGrade Grade => _grade;
     public EquipmentType Type => _type;
     public EquipmentStatType StatType => _statType;
     public float StatValue => _statValue;
+    public Sprite Icon => _icon;
 }
