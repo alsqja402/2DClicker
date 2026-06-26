@@ -102,6 +102,15 @@ public class Session : MonoBehaviour
     }
     public void Rebirth()
     {
+        // RebirthEffect의 onScreenCovered이랑 같은 느낌
+        _rebirth.RebirthEffect(() =>
+        {
+            ApplyRebirth();
+        });
+    }
+
+    void ApplyRebirth()
+    {
         _isBossBattleActive = false;
         StopBossTimer();
 
@@ -114,6 +123,8 @@ public class Session : MonoBehaviour
         _allyCtrl.AllyAllDestroy();
 
         _allyCtrl.ResetAlly();
+
+        _equipmentManager.ResetEquipment();
 
         if (_enemy != null)
         {

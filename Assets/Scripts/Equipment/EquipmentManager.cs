@@ -53,4 +53,12 @@ public class EquipmentManager : MonoBehaviour
 
         return bonus;
     }
+
+    public void ResetEquipment()
+    {
+        _equippedSword = null;
+        _equippedRing = null;
+
+        _equipmentView.UpdateView(_equippedSword, _equippedRing);
+    }
 }

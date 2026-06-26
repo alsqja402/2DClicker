@@ -181,13 +181,26 @@ public class AllyCtrl : MonoBehaviour
     public void AllyAllDestroy()
     {
         if (_archer != null)
+        {
             Destroy(_archer.gameObject);
+            _archer = null;
+        }
         if (_darkWizard != null)
+        {
             Destroy(_darkWizard.gameObject);
+            _darkWizard = null;
+        }
         if (_fireWizard != null)
+        {
             Destroy(_fireWizard.gameObject);
+            _fireWizard = null;
+        }
         if (_thief != null)
+        {
             Destroy(_thief.gameObject);
+            _thief = null;
+        }
+        UpdateAllyViews();
     }
 
     public void ResetAlly()

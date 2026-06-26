@@ -19,7 +19,7 @@ public class AllyUpgraderView : MonoBehaviour
 
     public void UpdateNameDamageText(float sum)
     {
-        _nameDamageText.text = string.Format(_nameDamageFormat, sum);
+        //_nameDamageText.text = string.Format(_nameDamageFormat, sum);
         _nameDamageText.text = sum.ToClickerString(_nameDamageFormat);
     }
 

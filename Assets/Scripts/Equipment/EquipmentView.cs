@@ -1,4 +1,4 @@
-using DG.Tweening;
+ï»¿using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,12 +9,12 @@ public class EquipmentView : MonoBehaviour
     [SerializeField] RectTransform _panelRectTransform;
     [SerializeField] CanvasGroup _panelCanvasGroup;
 
-    [Header("°Ë")]
+    [Header("ê²€")]
     [SerializeField] Image _swordImage;
     [SerializeField] TMP_Text _swordNameText;
     [SerializeField] TMP_Text _swordStatText;
 
-    [Header("¹ÝÁö")]
+    [Header("ë°˜ì§€")]
     [SerializeField] Image _ringImage;
     [SerializeField] TMP_Text _ringNameText;
     [SerializeField] TMP_Text _ringStatText;
